@@ -65,10 +65,6 @@
         </div>
     </div>
     <div class="mb-3">
-        <label for="allergies" class="form-label">Allergies (séparées par des virgules)</label>
-        <input type="text" class="form-control" id="allergies" name="allergies" value="{{ old('allergies') }}" placeholder="ex: pénicilline, arachides">
-    </div>
-    <div class="mb-3">
         <label for="medical_history" class="form-label">Antécédents médicaux</label>
         <textarea class="form-control" id="medical_history" name="medical_history" rows="3">{{ old('medical_history') }}</textarea>
     </div>

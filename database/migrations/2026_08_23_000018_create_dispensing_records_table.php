@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('dispensing_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('prescription_item_id')->constrained()->onDelete('cascade');
+            $table->foreignId('prescription_item_id')->constrained()->restrictOnDelete();
             $table->foreignId('medication_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('dispensed_by')->nullable()->constrained('staff')->onDelete('set null');
             $table->foreignId('administered_by')->nullable()->constrained('staff')->onDelete('set null');

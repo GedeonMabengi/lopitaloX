@@ -460,10 +460,6 @@ Voici une structure complète des vues Blade pour l'application de gestion hospi
         </div>
     </div>
     <div class="mb-3">
-        <label for="allergies" class="form-label">Allergies (séparées par des virgules)</label>
-        <input type="text" class="form-control" id="allergies" name="allergies" value="{{ old('allergies') }}" placeholder="ex: pénicilline, arachides">
-    </div>
-    <div class="mb-3">
         <label for="medical_history" class="form-label">Antécédents médicaux</label>
         <textarea class="form-control" id="medical_history" name="medical_history" rows="3">{{ old('medical_history') }}</textarea>
     </div>
@@ -541,9 +537,9 @@ Voici une structure complète des vues Blade pour l'application de gestion hospi
         <div class="card mb-3">
             <div class="card-header">Allergies</div>
             <div class="card-body">
-                @if($patient->allergiesList->count() > 0)
+                @if($patient->allergies->count() > 0)
                     <ul>
-                        @foreach($patient->allergiesList as $allergy)
+                        @foreach($patient->allergies as $allergy)
                             <li>{{ $allergy->allergen }} - {{ $allergy->severity }}</li>
                         @endforeach
                     </ul>

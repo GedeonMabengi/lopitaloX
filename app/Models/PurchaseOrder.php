@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\PurchaseOrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseOrder extends Model
 {
     use HasFactory;
-
-    const STATUS_DRAFT = 'draft';
-    const STATUS_ORDERED = 'ordered';
-    const STATUS_RECEIVED = 'received';
-    const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'order_code',
@@ -25,6 +21,7 @@ class PurchaseOrder extends Model
     ];
 
     protected $casts = [
+        'status' => PurchaseOrderStatus::class,
         'order_date' => 'datetime',
         'expected_delivery_date' => 'datetime',
         'total_amount' => 'decimal:2',
@@ -47,7 +44,7 @@ class PurchaseOrder extends Model
 
     public function recalculateTotal()
     {
-        $this->total_amount = $this->items->sum('total_price');
+        $this->total_amount = $this->items()->sum('total_price');
         $this->save();
     }
 }

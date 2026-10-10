@@ -12,8 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('bed_number')->unique();
             $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('status', ['available', 'occupied', 'cleaning', 'maintenance'])->default('available');
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }

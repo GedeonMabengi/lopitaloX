@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
     use HasFactory;
-
-    const METHOD_CASH = 'cash';
-    const METHOD_CREDIT_CARD = 'credit_card';
-    const METHOD_BANK_TRANSFER = 'bank_transfer';
-    const METHOD_INSURANCE = 'insurance';
-    const METHOD_MOBILE_MONEY = 'mobile_money';
 
     protected $fillable = [
         'payment_code',
@@ -26,9 +21,16 @@ class Payment extends Model
     ];
 
     protected $casts = [
+        'payment_method' => PaymentMethod::class,
         'payment_date' => 'datetime',
         'amount' => 'decimal:2',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(fn (Payment $payment) => $payment->invoice->recalculateTotals());
+        static::deleted(fn (Payment $payment) => $payment->invoice->recalculateTotals());
+    }
 
     public function invoice()
     {

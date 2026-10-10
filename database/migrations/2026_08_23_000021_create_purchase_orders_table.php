@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('supplier_id')->nullable()->constrained()->onDelete('set null');
             $table->dateTime('order_date');
             $table->dateTime('expected_delivery_date')->nullable();
-            $table->enum('status', ['draft', 'ordered', 'received', 'cancelled'])->default('draft');
+            $table->string('status')->default('draft');
             $table->decimal('total_amount', 12, 2)->default(0);
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

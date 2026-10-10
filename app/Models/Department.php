@@ -18,7 +18,7 @@ class Department extends Model
 
     public function beds()
     {
-        return $this->hasMany(Bed::class);
+        return $this->hasManyThrough(Bed::class, Room::class);
     }
 
     public function rooms()

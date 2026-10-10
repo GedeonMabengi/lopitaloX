@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-            $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+            $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
             $table->foreignId('prescriber_id')->nullable()->constrained('staff')->onDelete('set null');
             $table->dateTime('prescribed_at');
-            $table->enum('status', ['active', 'completed', 'cancelled', 'expired'])->default('active');
+            $table->string('status')->default('active');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

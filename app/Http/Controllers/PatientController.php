@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PatientController extends Controller
 {
@@ -35,15 +37,14 @@ class PatientController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female,other',
+            'gender' => ['required', Rule::enum(Gender::class)],
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email',
             'address' => 'nullable|string',
             'emergency_contact_name' => 'nullable|string',
             'emergency_contact_phone' => 'nullable|string',
             'blood_group' => 'nullable|string|max:5',
-            'allergies' => 'nullable|array',
-            'medical_history' => 'nullable|array',
+            'medical_history' => 'nullable|string',
         ]);
 
         // Générer un code patient unique (ex: PAT0001)
@@ -71,15 +72,14 @@ class PatientController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female,other',
+            'gender' => ['required', Rule::enum(Gender::class)],
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email',
             'address' => 'nullable|string',
             'emergency_contact_name' => 'nullable|string',
             'emergency_contact_phone' => 'nullable|string',
             'blood_group' => 'nullable|string|max:5',
-            'allergies' => 'nullable|array',
-            'medical_history' => 'nullable|array',
+            'medical_history' => 'nullable|string',
         ]);
 
         $patient->update($data);

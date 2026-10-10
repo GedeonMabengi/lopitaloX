@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_code')->unique();
-            $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
+            $table->foreignId('invoice_id')->constrained()->restrictOnDelete();
             $table->dateTime('payment_date');
             $table->decimal('amount', 12, 2);
-            $table->enum('payment_method', ['cash', 'credit_card', 'bank_transfer', 'insurance', 'mobile_money']);
+            $table->string('payment_method');
             $table->string('transaction_reference')->nullable();
             $table->foreignId('received_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

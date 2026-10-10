@@ -15,10 +15,15 @@ class InvoiceItem extends Model
         'description',
         'quantity',
         'unit_price',
-        'total_price',
         'reference_id',
         'reference_type',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(fn (InvoiceItem $item) => $item->invoice->recalculateTotals());
+        static::deleted(fn (InvoiceItem $item) => $item->invoice->recalculateTotals());
+    }
 
     protected $casts = [
         'unit_price' => 'decimal:2',

@@ -2,19 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
+use App\Enums\AdmissionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admission extends Model
 {
-    use HasFactory, SoftDeletes;
-
-    const STATUS_PLANNED = 'planned';
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DISCHARGED = 'discharged';
-    const STATUS_TRANSFERRED = 'transferred';
-    const STATUS_CANCELLED = 'cancelled';
+    use Auditable, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'admission_code',
@@ -30,8 +26,10 @@ class Admission extends Model
     ];
 
     protected $casts = [
+        'status' => AdmissionStatus::class,
         'admission_date' => 'datetime',
         'discharge_date' => 'datetime',
+        'diagnosis' => 'encrypted',
     ];
 
     public function patient()
@@ -82,5 +80,10 @@ class Admission extends Model
     public function surgeries()
     {
         return $this->hasMany(Surgery::class);
+    }
+
+    public function emergencyVisit()
+    {
+        return $this->hasOne(EmergencyVisit::class);
     }
 }

@@ -18,7 +18,7 @@
             <tr>
                 <td>{{ $appointment->scheduled_at->format('d/m/Y H:i') }}</td>
                 <td>{{ $appointment->staff->full_name ?? 'Non assigné' }}</td>
-                <td>{{ ucfirst($appointment->status) }}</td>
+                <td>{{ $appointment->status->label() }}</td>
             </tr>
         @endforeach
     </tbody>

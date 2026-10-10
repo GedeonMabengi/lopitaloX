@@ -16,9 +16,7 @@ return new class extends Migration
             $table->string('strength')->nullable();
             $table->string('unit')->nullable();
             $table->decimal('price', 10, 2)->default(0);
-            $table->integer('stock_quantity')->default(0);
-            $table->integer('reorder_level')->default(10);
-            $table->date('expiry_date')->nullable();
+            $table->integer('reorder_level')->default(10); // stock et péremption : voir medication_batches
             $table->timestamps();
         });
     }

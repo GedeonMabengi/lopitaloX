@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('imaging_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('imaging_order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('imaging_order_id')->constrained()->restrictOnDelete();
             $table->foreignId('radiologist_id')->nullable()->constrained('staff')->onDelete('set null');
             $table->text('findings')->nullable();
             $table->text('impression')->nullable();

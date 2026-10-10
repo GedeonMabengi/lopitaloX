@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\InvoiceStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,30 +11,20 @@ class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const STATUS_DRAFT = 'draft';
-    const STATUS_ISSUED = 'issued';
-    const STATUS_PARTIALLY_PAID = 'partially_paid';
-    const STATUS_PAID = 'paid';
-    const STATUS_OVERDUE = 'overdue';
-    const STATUS_CANCELLED = 'cancelled';
-
     protected $fillable = [
         'invoice_code',
         'patient_id',
         'admission_id',
         'appointment_id',
         'invoice_date',
-        'subtotal',
         'discount',
         'tax',
-        'total_amount',
-        'paid_amount',
-        'balance_due',
         'status',
         'notes',
     ];
 
     protected $casts = [
+        'status' => InvoiceStatus::class,
         'invoice_date' => 'datetime',
         'subtotal' => 'decimal:2',
         'discount' => 'decimal:2',
@@ -68,29 +59,30 @@ class Invoice extends Model
         return $this->hasMany(Payment::class);
     }
 
+    // Appelé automatiquement quand une ligne ou un paiement change (voir InvoiceItem et Payment)
     public function recalculateTotals()
     {
-        $this->subtotal = $this->items->sum('total_price');
-        $this->total_amount = $this->subtotal - $this->discount + $this->tax;
-        $this->balance_due = $this->total_amount - $this->paid_amount;
+        $this->subtotal = $this->items()->sum('total_price');
+        $this->paid_amount = $this->payments()->sum('amount');
         $this->save();
+        $this->refresh(); // total_amount et balance_due sont calculés par la base
 
         $this->updateStatus();
     }
 
     public function updateStatus()
     {
-        if ($this->status === self::STATUS_CANCELLED) {
+        if ($this->status === InvoiceStatus::Cancelled) {
             return;
         }
-        if ($this->balance_due <= 0) {
-            $this->status = self::STATUS_PAID;
+        if ($this->total_amount > 0 && $this->balance_due <= 0) {
+            $this->status = InvoiceStatus::Paid;
         } elseif ($this->paid_amount > 0) {
-            $this->status = self::STATUS_PARTIALLY_PAID;
-        } elseif ($this->status === self::STATUS_DRAFT) {
+            $this->status = InvoiceStatus::PartiallyPaid;
+        } elseif ($this->status === InvoiceStatus::Draft) {
             // keep draft
         } else {
-            $this->status = self::STATUS_ISSUED;
+            $this->status = InvoiceStatus::Issued;
         }
         $this->save();
     }

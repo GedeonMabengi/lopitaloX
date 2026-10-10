@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PrescriptionStatus;
 use App\Models\Prescription;
 use App\Models\Patient;
 use App\Models\Admission;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PrescriptionController extends Controller
 {
@@ -71,7 +73,7 @@ class PrescriptionController extends Controller
             'prescriber_id' => 'nullable|exists:staff,id',
             'prescribed_at' => 'required|date',
             'notes' => 'nullable|string',
-            'status' => 'nullable|in:active,completed,cancelled,expired',
+            'status' => ['nullable', Rule::enum(PrescriptionStatus::class)],
         ]);
 
         $prescription->update($data);

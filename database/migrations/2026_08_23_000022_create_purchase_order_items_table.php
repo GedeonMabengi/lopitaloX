@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('medication_id')->nullable()->constrained()->onDelete('set null');
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2);
-            $table->decimal('total_price', 12, 2);
+            $table->decimal('total_price', 12, 2)->storedAs('quantity * unit_price');
             $table->timestamps();
         });
     }

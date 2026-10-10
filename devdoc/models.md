@@ -124,15 +124,12 @@ class Patient extends Model
         'emergency_contact_name',
         'emergency_contact_phone',
         'blood_group',
-        'allergies',
         'medical_history',
         'user_id',
     ];
 
     protected $casts = [
         'date_of_birth' => 'date',
-        'allergies' => 'array',
-        'medical_history' => 'array',
     ];
 
     public function getFullNameAttribute()
@@ -160,7 +157,7 @@ class Patient extends Model
         return $this->hasMany(MedicalRecord::class);
     }
 
-    public function allergiesList()
+    public function allergies()
     {
         return $this->hasMany(Allergy::class);
     }
@@ -630,13 +627,11 @@ class MedicalRecord extends Model
         'objective',
         'assessment',
         'plan',
-        'vital_signs',
         'attachments',
     ];
 
     protected $casts = [
         'record_date' => 'datetime',
-        'vital_signs' => 'array',
         'attachments' => 'array',
     ];
 
@@ -1176,12 +1171,10 @@ class LabOrder extends Model
         'order_date',
         'status',
         'clinical_info',
-        'tests',
     ];
 
     protected $casts = [
         'order_date' => 'datetime',
-        'tests' => 'array',
     ];
 
     public function patient()

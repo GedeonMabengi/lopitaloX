@@ -30,7 +30,7 @@
                 <td>{{ number_format($invoice->total_amount, 2) }} €</td>
                 <td>{{ number_format($invoice->paid_amount, 2) }} €</td>
                 <td>{{ number_format($invoice->balance_due, 2) }} €</td>
-                <td><span class="badge bg-{{ $invoice->status == 'paid' ? 'success' : ($invoice->status == 'partially_paid' ? 'warning' : 'secondary') }}">{{ ucfirst($invoice->status) }}</span></td>
+                <td><span class="badge bg-{{ $invoice->status->value == 'paid' ? 'success' : ($invoice->status->value == 'partially_paid' ? 'warning' : 'secondary') }}">{{ $invoice->status->label() }}</span></td>
                 <td>
                     <a href="{{ route('invoices.show', $invoice) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                 </td>

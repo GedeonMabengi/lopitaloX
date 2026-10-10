@@ -35,7 +35,6 @@ class MedicalRecordController extends Controller
             'objective' => 'nullable|string',
             'assessment' => 'nullable|string',
             'plan' => 'nullable|string',
-            'vital_signs' => 'nullable|array',
             'attachments' => 'nullable|array',
         ]);
 
@@ -68,7 +67,6 @@ class MedicalRecordController extends Controller
             'objective' => 'nullable|string',
             'assessment' => 'nullable|string',
             'plan' => 'nullable|string',
-            'vital_signs' => 'nullable|array',
             'attachments' => 'nullable|array',
         ]);
 

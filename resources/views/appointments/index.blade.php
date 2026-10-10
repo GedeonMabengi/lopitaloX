@@ -45,11 +45,11 @@
                 <td>{{ $appointment->patient->full_name }}</td>
                 <td>{{ $appointment->staff->full_name ?? 'Non assigné' }}</td>
                 <td>{{ $appointment->department->name ?? 'N/A' }}</td>
-                <td><span class="badge bg-{{ $appointment->status == 'confirmed' ? 'success' : ($appointment->status == 'cancelled' ? 'danger' : 'secondary') }}">{{ ucfirst($appointment->status) }}</span></td>
+                <td><span class="badge bg-{{ $appointment->status->value == 'confirmed' ? 'success' : ($appointment->status->value == 'cancelled' ? 'danger' : 'secondary') }}">{{ $appointment->status->label() }}</span></td>
                 <td>
                     <a href="{{ route('appointments.show', $appointment) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                     <a href="{{ route('appointments.edit', $appointment) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                    @if($appointment->status == 'pending')
+                    @if($appointment->status->value == 'pending')
                         <form action="{{ route('appointments.confirm', $appointment) }}" method="POST" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>

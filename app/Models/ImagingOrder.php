@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ImagingOrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ImagingOrder extends Model
 {
     use HasFactory;
-
-    const STATUS_PENDING = 'pending';
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_PERFORMED = 'performed';
-    const STATUS_REPORTED = 'reported';
-    const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'order_code',
@@ -28,6 +23,7 @@ class ImagingOrder extends Model
     ];
 
     protected $casts = [
+        'status' => ImagingOrderStatus::class,
         'order_date' => 'datetime',
     ];
 

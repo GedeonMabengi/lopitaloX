@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OccupancyStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,16 +10,14 @@ class Bed extends Model
 {
     use HasFactory;
 
-    const STATUS_AVAILABLE = 'available';
-    const STATUS_OCCUPIED = 'occupied';
-    const STATUS_CLEANING = 'cleaning';
-    const STATUS_MAINTENANCE = 'maintenance';
-
     protected $fillable = [
         'bed_number',
         'room_id',
-        'department_id',
         'status',
+    ];
+
+    protected $casts = [
+        'status' => OccupancyStatus::class,
     ];
 
     public function room()
@@ -26,9 +25,10 @@ class Bed extends Model
         return $this->belongsTo(Room::class);
     }
 
+    // Le service d'un lit est celui de sa chambre
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->hasOneThrough(Department::class, Room::class, 'id', 'id', 'room_id', 'department_id');
     }
 
     public function admissions()
@@ -38,6 +38,6 @@ class Bed extends Model
 
     public function scopeAvailable($query)
     {
-        return $query->where('status', self::STATUS_AVAILABLE);
+        return $query->where('status', OccupancyStatus::Available);
     }
 }

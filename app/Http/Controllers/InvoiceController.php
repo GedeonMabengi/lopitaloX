@@ -39,12 +39,6 @@ class InvoiceController extends Controller
 
         $data['invoice_code'] = 'INV' . str_pad(Invoice::max('id') + 1, 6, '0', STR_PAD_LEFT);
         $data['status'] = 'draft';
-        $data['subtotal'] = 0;
-        $data['discount'] = 0;
-        $data['tax'] = 0;
-        $data['total_amount'] = 0;
-        $data['paid_amount'] = 0;
-        $data['balance_due'] = 0;
 
         $invoice = Invoice::create($data);
 

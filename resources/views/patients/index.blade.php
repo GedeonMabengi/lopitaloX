@@ -33,7 +33,7 @@
                     <td>{{ $patient->patient_code }}</td>
                     <td>{{ $patient->full_name }}</td>
                     <td>{{ $patient->date_of_birth->format('d/m/Y') }}</td>
-                    <td>{{ $patient->gender == 'male' ? 'Homme' : ($patient->gender == 'female' ? 'Femme' : 'Autre') }}</td>
+                    <td>{{ $patient->gender->label() }}</td>
                     <td>{{ $patient->phone ?? 'N/A' }}</td>
                     <td>
                         <a href="{{ route('patients.show', $patient) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('lab_results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lab_order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lab_order_id')->constrained()->restrictOnDelete();
             $table->string('test_name');
             $table->string('result_value')->nullable();
             $table->string('unit')->nullable();

@@ -21,7 +21,7 @@
         <select class="form-select" id="admission_id" name="admission_id">
             <option value="">Aucune</option>
             @foreach($admissions as $admission)
-                <option value="{{ $admission->id }}">{{ $admission->admission_date->format('d/m/Y') }} - {{ $admission->status }}</option>
+                <option value="{{ $admission->id }}">{{ $admission->admission_date->format('d/m/Y') }} - {{ $admission->status->label() }}</option>
             @endforeach
         </select>
     </div>

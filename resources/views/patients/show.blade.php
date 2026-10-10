@@ -18,7 +18,7 @@
             <div class="card-body">
                 <p><strong>Code :</strong> {{ $patient->patient_code }}</p>
                 <p><strong>Date de naissance :</strong> {{ $patient->date_of_birth->format('d/m/Y') }}</p>
-                <p><strong>Genre :</strong> {{ $patient->gender == 'male' ? 'Homme' : ($patient->gender == 'female' ? 'Femme' : 'Autre') }}</p>
+                <p><strong>Genre :</strong> {{ $patient->gender->label() }}</p>
                 <p><strong>Groupe sanguin :</strong> {{ $patient->blood_group ?? 'N/A' }}</p>
                 <p><strong>Téléphone :</strong> {{ $patient->phone ?? 'N/A' }}</p>
                 <p><strong>Email :</strong> {{ $patient->email ?? 'N/A' }}</p>
@@ -29,9 +29,9 @@
         <div class="card mb-3">
             <div class="card-header">Allergies</div>
             <div class="card-body">
-                @if($patient->allergiesList->count() > 0)
+                @if($patient->allergies->count() > 0)
                     <ul>
-                        @foreach($patient->allergiesList as $allergy)
+                        @foreach($patient->allergies as $allergy)
                             <li>{{ $allergy->allergen }} - {{ $allergy->severity }}</li>
                         @endforeach
                     </ul>
@@ -65,7 +65,7 @@
                     <ul class="list-group">
                         @foreach($patient->admissions as $admission)
                             <li class="list-group-item">
-                                {{ $admission->admission_date->format('d/m/Y') }} - {{ $admission->status }}
+                                {{ $admission->admission_date->format('d/m/Y') }} - {{ $admission->status->label() }}
                             </li>
                         @endforeach
                     </ul>

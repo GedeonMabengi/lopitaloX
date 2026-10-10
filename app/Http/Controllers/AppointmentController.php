@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppointmentStatus;
 use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Staff;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
@@ -78,7 +80,7 @@ class AppointmentController extends Controller
             'end_at' => 'nullable|date|after:scheduled_at',
             'reason' => 'nullable|string',
             'notes' => 'nullable|string',
-            'status' => 'nullable|in:pending,confirmed,checked_in,completed,cancelled,no_show',
+            'status' => ['nullable', Rule::enum(AppointmentStatus::class)],
         ]);
 
         $appointment->update($data);

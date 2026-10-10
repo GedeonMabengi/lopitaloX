@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('location')->nullable();
-            $table->enum('status', ['available', 'occupied', 'cleaning', 'maintenance'])->default('available');
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }

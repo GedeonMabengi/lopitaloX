@@ -24,7 +24,7 @@
                 <td>{{ $prescription->prescribed_at->format('d/m/Y H:i') }}</td>
                 <td>{{ $prescription->patient->full_name }}</td>
                 <td>{{ $prescription->prescriber->full_name ?? 'N/A' }}</td>
-                <td><span class="badge bg-{{ $prescription->status == 'active' ? 'success' : 'secondary' }}">{{ $prescription->status }}</span></td>
+                <td><span class="badge bg-{{ $prescription->status->value == 'active' ? 'success' : 'secondary' }}">{{ $prescription->status->label() }}</span></td>
                 <td>
                     <a href="{{ route('prescriptions.show', $prescription) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                 </td>

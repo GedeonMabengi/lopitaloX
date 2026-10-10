@@ -59,8 +59,8 @@
                                     <strong>{{ $appointment->patient->full_name }}</strong><br>
                                     <small>{{ $appointment->scheduled_at->format('d/m/Y H:i') }} - {{ $appointment->staff->full_name ?? 'Non assigné' }}</small>
                                 </div>
-                                <span class="badge bg-{{ $appointment->status == 'confirmed' ? 'success' : 'secondary' }}">
-                                    {{ ucfirst($appointment->status) }}
+                                <span class="badge bg-{{ $appointment->status->value == 'confirmed' ? 'success' : 'secondary' }}">
+                                    {{ $appointment->status->label() }}
                                 </span>
                             </li>
                         @endforeach

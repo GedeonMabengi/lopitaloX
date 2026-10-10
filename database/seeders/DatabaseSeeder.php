@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -57,6 +58,7 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($this->patients() as $patient) {
+            $patient['medical_history'] = $this->encrypt($patient['medical_history']);
             DB::table('patients')->updateOrInsert(
                 ['patient_code' => $patient['patient_code']],
                 $this->withTimestamps($patient, $now),
@@ -72,7 +74,7 @@ class DatabaseSeeder extends Seeder
 
         $roomIds = DB::table('rooms')->pluck('id', 'room_number');
 
-        foreach ($this->beds($departmentIds, $roomIds) as $bed) {
+        foreach ($this->beds($roomIds) as $bed) {
             DB::table('beds')->updateOrInsert(
                 ['bed_number' => $bed['bed_number']],
                 $this->withTimestamps($bed, $now),
@@ -99,6 +101,29 @@ class DatabaseSeeder extends Seeder
         $supplierIds = DB::table('suppliers')->pluck('id', 'name');
         $medicationIds = DB::table('medications')->pluck('id', 'name');
 
+        // Stock initial : un lot par médicament + le mouvement d'entrée correspondant
+        foreach ($this->medicationBatches($medicationIds) as $batch) {
+            DB::table('medication_batches')->updateOrInsert(
+                ['medication_id' => $batch['medication_id'], 'batch_number' => $batch['batch_number']],
+                $this->withTimestamps($batch, $now),
+            );
+
+            $batchId = DB::table('medication_batches')
+                ->where('medication_id', $batch['medication_id'])
+                ->where('batch_number', $batch['batch_number'])
+                ->value('id');
+
+            DB::table('stock_transactions')->updateOrInsert(
+                ['medication_batch_id' => $batchId, 'type' => 'purchase'],
+                $this->withTimestamps([
+                    'medication_id' => $batch['medication_id'],
+                    'quantity' => $batch['quantity'],
+                    'performed_by' => $adminId,
+                    'notes' => 'Stock initial',
+                ], $now),
+            );
+        }
+
         foreach ($this->appointments($departmentIds, $staffIds, $patientIds, $adminId) as $appointment) {
             DB::table('appointments')->updateOrInsert(
                 [
@@ -110,6 +135,7 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($this->admissions($departmentIds, $staffIds, $patientIds, $bedIds) as $admission) {
+            $admission['diagnosis'] = $this->encrypt($admission['diagnosis']);
             DB::table('admissions')->updateOrInsert(
                 ['admission_code' => $admission['admission_code']],
                 $this->withTimestamps($admission, $now),
@@ -197,12 +223,12 @@ class DatabaseSeeder extends Seeder
     private function patients(): array
     {
         return [
-            ['patient_code' => 'PAT-001', 'first_name' => 'Grace', 'last_name' => 'Tshibanda', 'date_of_birth' => '1994-02-10', 'gender' => 'female', 'phone' => '+243820000001', 'email' => 'grace.tshibanda@example.com', 'address' => 'Lubumbashi, Golf', 'emergency_contact_name' => 'Marc Tshibanda', 'emergency_contact_phone' => '+243830000001', 'blood_group' => 'O+', 'allergies' => json_encode(['penicilline']), 'medical_history' => json_encode(['asthme'])],
-            ['patient_code' => 'PAT-002', 'first_name' => 'Daniel', 'last_name' => 'Mbuyi', 'date_of_birth' => '1988-05-21', 'gender' => 'male', 'phone' => '+243820000002', 'email' => 'daniel.mbuyi@example.com', 'address' => 'Lubumbashi, Kenya', 'emergency_contact_name' => 'Julie Mbuyi', 'emergency_contact_phone' => '+243830000002', 'blood_group' => 'A+', 'allergies' => json_encode([]), 'medical_history' => json_encode(['hypertension'])],
-            ['patient_code' => 'PAT-003', 'first_name' => 'Nadine', 'last_name' => 'Kasongo', 'date_of_birth' => '2001-12-03', 'gender' => 'female', 'phone' => '+243820000003', 'email' => 'nadine.kasongo@example.com', 'address' => 'Lubumbashi, Katuba', 'emergency_contact_name' => 'Chantal Kasongo', 'emergency_contact_phone' => '+243830000003', 'blood_group' => 'B+', 'allergies' => json_encode(['arachides']), 'medical_history' => json_encode([])],
-            ['patient_code' => 'PAT-004', 'first_name' => 'Cedric', 'last_name' => 'Ngoy', 'date_of_birth' => '1975-08-16', 'gender' => 'male', 'phone' => '+243820000004', 'email' => 'cedric.ngoy@example.com', 'address' => 'Lubumbashi, Ruashi', 'emergency_contact_name' => 'Alice Ngoy', 'emergency_contact_phone' => '+243830000004', 'blood_group' => 'AB+', 'allergies' => json_encode(['iode']), 'medical_history' => json_encode(['diabete type 2'])],
-            ['patient_code' => 'PAT-005', 'first_name' => 'Esther', 'last_name' => 'Lukusa', 'date_of_birth' => '1999-04-28', 'gender' => 'female', 'phone' => '+243820000005', 'email' => 'esther.lukusa@example.com', 'address' => 'Lubumbashi, Centre-ville', 'emergency_contact_name' => 'Joseph Lukusa', 'emergency_contact_phone' => '+243830000005', 'blood_group' => 'O-', 'allergies' => json_encode([]), 'medical_history' => json_encode(['cesarienne'])],
-            ['patient_code' => 'PAT-006', 'first_name' => 'Moise', 'last_name' => 'Kitenge', 'date_of_birth' => '2016-10-11', 'gender' => 'male', 'phone' => '+243820000006', 'email' => null, 'address' => 'Lubumbashi, Kampemba', 'emergency_contact_name' => 'Rebecca Kitenge', 'emergency_contact_phone' => '+243830000006', 'blood_group' => 'A-', 'allergies' => json_encode(['lait']), 'medical_history' => json_encode(['paludisme recurrent'])],
+            ['patient_code' => 'PAT-001', 'first_name' => 'Grace', 'last_name' => 'Tshibanda', 'date_of_birth' => '1994-02-10', 'gender' => 'female', 'phone' => '+243820000001', 'email' => 'grace.tshibanda@example.com', 'address' => 'Lubumbashi, Golf', 'emergency_contact_name' => 'Marc Tshibanda', 'emergency_contact_phone' => '+243830000001', 'blood_group' => 'O+', 'medical_history' => 'asthme'],
+            ['patient_code' => 'PAT-002', 'first_name' => 'Daniel', 'last_name' => 'Mbuyi', 'date_of_birth' => '1988-05-21', 'gender' => 'male', 'phone' => '+243820000002', 'email' => 'daniel.mbuyi@example.com', 'address' => 'Lubumbashi, Kenya', 'emergency_contact_name' => 'Julie Mbuyi', 'emergency_contact_phone' => '+243830000002', 'blood_group' => 'A+', 'medical_history' => 'hypertension'],
+            ['patient_code' => 'PAT-003', 'first_name' => 'Nadine', 'last_name' => 'Kasongo', 'date_of_birth' => '2001-12-03', 'gender' => 'female', 'phone' => '+243820000003', 'email' => 'nadine.kasongo@example.com', 'address' => 'Lubumbashi, Katuba', 'emergency_contact_name' => 'Chantal Kasongo', 'emergency_contact_phone' => '+243830000003', 'blood_group' => 'B+', 'medical_history' => null],
+            ['patient_code' => 'PAT-004', 'first_name' => 'Cedric', 'last_name' => 'Ngoy', 'date_of_birth' => '1975-08-16', 'gender' => 'male', 'phone' => '+243820000004', 'email' => 'cedric.ngoy@example.com', 'address' => 'Lubumbashi, Ruashi', 'emergency_contact_name' => 'Alice Ngoy', 'emergency_contact_phone' => '+243830000004', 'blood_group' => 'AB+', 'medical_history' => 'diabete type 2'],
+            ['patient_code' => 'PAT-005', 'first_name' => 'Esther', 'last_name' => 'Lukusa', 'date_of_birth' => '1999-04-28', 'gender' => 'female', 'phone' => '+243820000005', 'email' => 'esther.lukusa@example.com', 'address' => 'Lubumbashi, Centre-ville', 'emergency_contact_name' => 'Joseph Lukusa', 'emergency_contact_phone' => '+243830000005', 'blood_group' => 'O-', 'medical_history' => 'cesarienne'],
+            ['patient_code' => 'PAT-006', 'first_name' => 'Moise', 'last_name' => 'Kitenge', 'date_of_birth' => '2016-10-11', 'gender' => 'male', 'phone' => '+243820000006', 'email' => null, 'address' => 'Lubumbashi, Kampemba', 'emergency_contact_name' => 'Rebecca Kitenge', 'emergency_contact_phone' => '+243830000006', 'blood_group' => 'A-', 'medical_history' => 'paludisme recurrent'],
         ];
     }
 
@@ -218,28 +244,52 @@ class DatabaseSeeder extends Seeder
         ];
     }
 
-    private function beds($departmentIds, $roomIds): array
+    private function beds($roomIds): array
     {
         return [
-            ['bed_number' => 'BED-001', 'room_id' => $roomIds['URG-101'], 'department_id' => $departmentIds['URG'], 'status' => 'occupied'],
-            ['bed_number' => 'BED-002', 'room_id' => $roomIds['PED-201'], 'department_id' => $departmentIds['PED'], 'status' => 'available'],
-            ['bed_number' => 'BED-003', 'room_id' => $roomIds['MAT-301'], 'department_id' => $departmentIds['MAT'], 'status' => 'available'],
-            ['bed_number' => 'BED-004', 'room_id' => $roomIds['CAR-401'], 'department_id' => $departmentIds['CAR'], 'status' => 'available'],
-            ['bed_number' => 'BED-005', 'room_id' => $roomIds['LAB-501'], 'department_id' => $departmentIds['LAB'], 'status' => 'cleaning'],
-            ['bed_number' => 'BED-006', 'room_id' => $roomIds['RAD-601'], 'department_id' => $departmentIds['RAD'], 'status' => 'maintenance'],
+            ['bed_number' => 'BED-001', 'room_id' => $roomIds['URG-101'], 'status' => 'occupied'],
+            ['bed_number' => 'BED-002', 'room_id' => $roomIds['PED-201'], 'status' => 'available'],
+            ['bed_number' => 'BED-003', 'room_id' => $roomIds['MAT-301'], 'status' => 'available'],
+            ['bed_number' => 'BED-004', 'room_id' => $roomIds['CAR-401'], 'status' => 'available'],
+            ['bed_number' => 'BED-005', 'room_id' => $roomIds['LAB-501'], 'status' => 'cleaning'],
+            ['bed_number' => 'BED-006', 'room_id' => $roomIds['RAD-601'], 'status' => 'maintenance'],
         ];
     }
 
     private function medications(): array
     {
         return [
-            ['name' => 'Paracetamol', 'generic_name' => 'Acetaminophene', 'form' => 'comprime', 'strength' => '500mg', 'unit' => 'boite', 'price' => 2.50, 'stock_quantity' => 250, 'reorder_level' => 30, 'expiry_date' => '2027-12-31'],
-            ['name' => 'Amoxicilline', 'generic_name' => 'Amoxicilline', 'form' => 'capsule', 'strength' => '500mg', 'unit' => 'boite', 'price' => 5.00, 'stock_quantity' => 120, 'reorder_level' => 25, 'expiry_date' => '2027-09-30'],
-            ['name' => 'Ceftriaxone', 'generic_name' => 'Ceftriaxone', 'form' => 'injection', 'strength' => '1g', 'unit' => 'flacon', 'price' => 8.75, 'stock_quantity' => 80, 'reorder_level' => 20, 'expiry_date' => '2027-06-30'],
-            ['name' => 'Ibuprofene', 'generic_name' => 'Ibuprofene', 'form' => 'comprime', 'strength' => '400mg', 'unit' => 'boite', 'price' => 3.25, 'stock_quantity' => 160, 'reorder_level' => 25, 'expiry_date' => '2028-01-31'],
-            ['name' => 'Metformine', 'generic_name' => 'Metformine', 'form' => 'comprime', 'strength' => '850mg', 'unit' => 'boite', 'price' => 4.80, 'stock_quantity' => 90, 'reorder_level' => 20, 'expiry_date' => '2027-11-30'],
-            ['name' => 'Salbutamol', 'generic_name' => 'Salbutamol', 'form' => 'inhalateur', 'strength' => '100mcg', 'unit' => 'piece', 'price' => 9.50, 'stock_quantity' => 45, 'reorder_level' => 10, 'expiry_date' => '2027-08-31'],
+            ['name' => 'Paracetamol', 'generic_name' => 'Acetaminophene', 'form' => 'comprime', 'strength' => '500mg', 'unit' => 'boite', 'price' => 2.50, 'reorder_level' => 30],
+            ['name' => 'Amoxicilline', 'generic_name' => 'Amoxicilline', 'form' => 'capsule', 'strength' => '500mg', 'unit' => 'boite', 'price' => 5.00, 'reorder_level' => 25],
+            ['name' => 'Ceftriaxone', 'generic_name' => 'Ceftriaxone', 'form' => 'injection', 'strength' => '1g', 'unit' => 'flacon', 'price' => 8.75, 'reorder_level' => 20],
+            ['name' => 'Ibuprofene', 'generic_name' => 'Ibuprofene', 'form' => 'comprime', 'strength' => '400mg', 'unit' => 'boite', 'price' => 3.25, 'reorder_level' => 25],
+            ['name' => 'Metformine', 'generic_name' => 'Metformine', 'form' => 'comprime', 'strength' => '850mg', 'unit' => 'boite', 'price' => 4.80, 'reorder_level' => 20],
+            ['name' => 'Salbutamol', 'generic_name' => 'Salbutamol', 'form' => 'inhalateur', 'strength' => '100mcg', 'unit' => 'piece', 'price' => 9.50, 'reorder_level' => 10],
         ];
+    }
+
+    private function medicationBatches($medicationIds): array
+    {
+        $batches = [
+            'Paracetamol' => [250, '2027-12-31'],
+            'Amoxicilline' => [120, '2027-09-30'],
+            'Ceftriaxone' => [80, '2027-06-30'],
+            'Ibuprofene' => [160, '2028-01-31'],
+            'Metformine' => [90, '2027-11-30'],
+            'Salbutamol' => [45, '2027-08-31'],
+        ];
+
+        $rows = [];
+        foreach ($batches as $name => [$quantity, $expiryDate]) {
+            $rows[] = [
+                'medication_id' => $medicationIds[$name],
+                'batch_number' => 'LOT-' . strtoupper(substr($name, 0, 4)) . '-001',
+                'expiry_date' => $expiryDate,
+                'quantity' => $quantity,
+            ];
+        }
+
+        return $rows;
     }
 
     private function suppliers(): array
@@ -317,8 +367,8 @@ class DatabaseSeeder extends Seeder
         $temperatures = [37.8, 38.2, 36.9, 37.1, 36.7, 38.0];
         $heartRates = [88, 102, 79, 84, 76, 98];
         $respiratoryRates = [18, 24, 17, 18, 16, 22];
-        $systolic = ['120', '105', '112', '145', '118', '100'];
-        $diastolic = ['80', '70', '72', '95', '78', '65'];
+        $systolic = [120, 105, 112, 145, 118, 100];
+        $diastolic = [80, 70, 72, 95, 78, 65];
         $oxygen = [98, 97, 99, 96, 99, 95];
         $weights = [68.5, 24.2, 61.0, 82.7, 70.3, 31.4];
         $heights = [168, 122, 164, 175, 160, 136];
@@ -372,9 +422,14 @@ class DatabaseSeeder extends Seeder
                 'medication_id' => $medicationIds[$medications[$index - 1]],
                 'quantity' => $quantities[$index - 1],
                 'unit_price' => $unitPrices[$index - 1],
-                'total_price' => $quantities[$index - 1] * $unitPrices[$index - 1],
             ];
         }, range(1, 6));
+    }
+
+    // DB::table contourne le cast `encrypted` des modèles : on chiffre comme lui
+    private function encrypt(?string $value): ?string
+    {
+        return $value === null ? null : Crypt::encryptString($value);
     }
 
     private function withTimestamps(array $values, mixed $now): array

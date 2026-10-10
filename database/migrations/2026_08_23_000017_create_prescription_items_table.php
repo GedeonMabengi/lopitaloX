@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('instructions')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->enum('status', ['prescribed', 'dispensed', 'administered', 'stopped'])->default('prescribed');
+            $table->string('status')->default('prescribed');
             $table->timestamps();
         });
     }

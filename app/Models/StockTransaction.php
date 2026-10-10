@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StockTransactionType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,14 +10,9 @@ class StockTransaction extends Model
 {
     use HasFactory;
 
-    const TYPE_PURCHASE = 'purchase';
-    const TYPE_SALE = 'sale';
-    const TYPE_ADJUSTMENT = 'adjustment';
-    const TYPE_TRANSFER_IN = 'transfer_in';
-    const TYPE_TRANSFER_OUT = 'transfer_out';
-
     protected $fillable = [
         'medication_id',
+        'medication_batch_id',
         'type',
         'quantity',
         'unit_price',
@@ -25,12 +21,18 @@ class StockTransaction extends Model
     ];
 
     protected $casts = [
+        'type' => StockTransactionType::class,
         'unit_price' => 'decimal:2',
     ];
 
     public function medication()
     {
         return $this->belongsTo(Medication::class);
+    }
+
+    public function batch()
+    {
+        return $this->belongsTo(MedicationBatch::class, 'medication_batch_id');
     }
 
     public function performedBy()

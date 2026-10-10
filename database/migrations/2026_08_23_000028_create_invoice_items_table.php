@@ -15,9 +15,8 @@ return new class extends Migration
             $table->string('description');
             $table->integer('quantity')->default(1);
             $table->decimal('unit_price', 10, 2);
-            $table->decimal('total_price', 12, 2);
-            $table->foreignId('reference_id')->nullable();
-            $table->string('reference_type')->nullable();
+            $table->decimal('total_price', 12, 2)->storedAs('quantity * unit_price');
+            $table->nullableMorphs('reference');
             $table->timestamps();
         });
     }

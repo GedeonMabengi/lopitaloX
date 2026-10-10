@@ -13,7 +13,7 @@
         <p><strong>Patient :</strong> {{ $prescription->patient->full_name }}</p>
         <p><strong>Prescrit le :</strong> {{ $prescription->prescribed_at->format('d/m/Y H:i') }}</p>
         <p><strong>Prescripteur :</strong> {{ $prescription->prescriber->full_name ?? 'N/A' }}</p>
-        <p><strong>Statut :</strong> {{ $prescription->status }}</p>
+        <p><strong>Statut :</strong> {{ $prescription->status->label() }}</p>
         @if($prescription->notes)
             <p><strong>Notes :</strong> {{ $prescription->notes }}</p>
         @endif
@@ -38,7 +38,7 @@
                 <td>{{ $item->dosage }}</td>
                 <td>{{ $item->frequency }}</td>
                 <td>{{ $item->duration }}</td>
-                <td>{{ $item->status }}</td>
+                <td>{{ $item->status->label() }}</td>
             </tr>
         @empty
             <tr><td colspan="5">Aucun médicament.</td></tr>
