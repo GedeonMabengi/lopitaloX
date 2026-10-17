@@ -15,6 +15,7 @@ class RoleSeeder extends BaseSeeder
             'lab_tech' => 'Technicien de laboratoire',
             'accountant' => 'Comptable',
             'director' => 'Directeur',
+            'patient' => 'Patient (portail)',
         ];
 
         foreach ($roles as $name => $description) {

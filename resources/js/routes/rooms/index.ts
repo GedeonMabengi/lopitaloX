@@ -1,9 +1,9 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
@@ -16,75 +16,72 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
 })
-
 /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
+    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: index.url(options),
+        method: 'get',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
+        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url(options),
+            method: 'get',
+        })
+            /**
 * @see \App\Http\Controllers\RoomController::index
-* @see [unknown]:0
-* @route '/rooms'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
+        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    index.form = indexForm
 /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
     method: 'get',
@@ -97,75 +94,72 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
 create.url = (options?: RouteQueryOptions) => {
     return create.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
     method: 'get',
 })
-
 /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(options),
     method: 'head',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
+    const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: create.url(options),
+        method: 'get',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
+        createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: create.url(options),
+            method: 'get',
+        })
+            /**
 * @see \App\Http\Controllers\RoomController::create
-* @see [unknown]:0
-* @route '/rooms/create'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
+ * @see [unknown]:0
+ * @route '/rooms/create'
+ */
+        createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: create.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    create.form = createForm
 /**
 * @see \App\Http\Controllers\RoomController::store
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
@@ -178,50 +172,49 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::store
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\RoomController::store
-* @see [unknown]:0
-* @route '/rooms'
-*/
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::store
-* @see [unknown]:0
-* @route '/rooms'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
+    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: store.url(options),
+        method: 'post',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::store
-* @see [unknown]:0
-* @route '/rooms'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
-
+ * @see [unknown]:0
+ * @route '/rooms'
+ */
+        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: store.url(options),
+            method: 'post',
+        })
+    
+    store.form = storeForm
 /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 export const show = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
@@ -234,25 +227,26 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 show.url = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { room: args }
     }
 
+    
     if (Array.isArray(args)) {
         args = {
-            room: args[0],
-        }
+                    room: args[0],
+                }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        room: args.room,
-    }
+                        room: args.room,
+                }
 
     return show.definition.url
             .replace('{room}', parsedArgs.room.toString())
@@ -261,66 +255,63 @@ show.url = (args: { room: string | number } | [room: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 show.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
-
 /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 show.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-const showForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+    const showForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: show.url(args, options),
+        method: 'get',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-showForm.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+        showForm.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: show.url(args, options),
+            method: 'get',
+        })
+            /**
 * @see \App\Http\Controllers\RoomController::show
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-showForm.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+        showForm.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: show.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    show.form = showForm
 /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
 export const edit = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
@@ -333,25 +324,26 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
 edit.url = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { room: args }
     }
 
+    
     if (Array.isArray(args)) {
         args = {
-            room: args[0],
-        }
+                    room: args[0],
+                }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        room: args.room,
-    }
+                        room: args.room,
+                }
 
     return edit.definition.url
             .replace('{room}', parsedArgs.room.toString())
@@ -360,66 +352,63 @@ edit.url = (args: { room: string | number } | [room: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
 edit.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
-
 /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
 edit.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
-const editForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
+    const editForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: edit.url(args, options),
+        method: 'get',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
-editForm.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
+        editForm.get = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: edit.url(args, options),
+            method: 'get',
+        })
+            /**
 * @see \App\Http\Controllers\RoomController::edit
-* @see [unknown]:0
-* @route '/rooms/{room}/edit'
-*/
-editForm.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
+ * @see [unknown]:0
+ * @route '/rooms/{room}/edit'
+ */
+        editForm.head = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: edit.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    edit.form = editForm
 /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 export const update = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
@@ -432,25 +421,26 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 update.url = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { room: args }
     }
 
+    
     if (Array.isArray(args)) {
         args = {
-            room: args[0],
-        }
+                    room: args[0],
+                }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        room: args.room,
-    }
+                        room: args.room,
+                }
 
     return update.definition.url
             .replace('{room}', parsedArgs.room.toString())
@@ -459,76 +449,73 @@ update.url = (args: { room: string | number } | [room: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 update.put = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
-
 /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 update.patch = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: update.url(args, options),
     method: 'patch',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-const updateForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+    const updateForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: update.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PUT',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-updateForm.put = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+        updateForm.put = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: update.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PUT',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+            /**
 * @see \App\Http\Controllers\RoomController::update
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-updateForm.patch = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-update.form = updateForm
-
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+        updateForm.patch = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: update.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    update.form = updateForm
 /**
 * @see \App\Http\Controllers\RoomController::destroy
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 export const destroy = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
@@ -541,25 +528,26 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\RoomController::destroy
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 destroy.url = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { room: args }
     }
 
+    
     if (Array.isArray(args)) {
         args = {
-            room: args[0],
-        }
+                    room: args[0],
+                }
     }
 
     args = applyUrlDefaults(args)
 
     const parsedArgs = {
-        room: args.room,
-    }
+                        room: args.room,
+                }
 
     return destroy.definition.url
             .replace('{room}', parsedArgs.room.toString())
@@ -568,54 +556,53 @@ destroy.url = (args: { room: string | number } | [room: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\RoomController::destroy
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
 destroy.delete = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
-/**
+    /**
 * @see \App\Http\Controllers\RoomController::destroy
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-const destroyForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+    const destroyForm = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: destroy.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'DELETE',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
 
-/**
+            /**
 * @see \App\Http\Controllers\RoomController::destroy
-* @see [unknown]:0
-* @route '/rooms/{room}'
-*/
-destroyForm.delete = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
-
+ * @see [unknown]:0
+ * @route '/rooms/{room}'
+ */
+        destroyForm.delete = (args: { room: string | number } | [room: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: destroy.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'DELETE',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    destroy.form = destroyForm
 const rooms = {
     index: Object.assign(index, index),
-    create: Object.assign(create, create),
-    store: Object.assign(store, store),
-    show: Object.assign(show, show),
-    edit: Object.assign(edit, edit),
-    update: Object.assign(update, update),
-    destroy: Object.assign(destroy, destroy),
+create: Object.assign(create, create),
+store: Object.assign(store, store),
+show: Object.assign(show, show),
+edit: Object.assign(edit, edit),
+update: Object.assign(update, update),
+destroy: Object.assign(destroy, destroy),
 }
 
 export default rooms

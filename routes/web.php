@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\MedicalRecordController;
@@ -37,19 +35,14 @@ use App\Http\Controllers\PatientPortalController;
 
 /*
 |--------------------------------------------------------------------------
-| Routes publiques (authentification)
+| Routes publiques
 |--------------------------------------------------------------------------
+| Connexion, inscription, déconnexion, mot de passe oublié et double
+| authentification sont fournis par Fortify (voir config/fortify.php).
 */
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+})->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -325,3 +318,4 @@ Route::middleware(['auth', 'role:patient'])->prefix('portal')->name('portal.')->
     Route::get('/messages', [PatientPortalController::class, 'messages'])->name('messages');
     Route::post('/messages', [PatientPortalController::class, 'sendMessage'])->name('messages.send');
 });
+require __DIR__.'/settings.php';
