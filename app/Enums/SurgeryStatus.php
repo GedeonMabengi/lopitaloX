@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum SurgeryStatus: string
 {
+    use HasOptions;
+
     case Scheduled = 'scheduled';
     case InProgress = 'in_progress';
     case Completed = 'completed';

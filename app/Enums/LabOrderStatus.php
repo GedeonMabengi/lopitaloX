@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum LabOrderStatus: string
 {
+    use HasOptions;
+
     case Pending = 'pending';
     case SampleCollected = 'sample_collected';
     case InProgress = 'in_progress';

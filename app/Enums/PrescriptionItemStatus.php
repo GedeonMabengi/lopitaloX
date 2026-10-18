@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum PrescriptionItemStatus: string
 {
+    use HasOptions;
+
     case Prescribed = 'prescribed';
     case Dispensed = 'dispensed';
     case Administered = 'administered';

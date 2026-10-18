@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum StockTransactionType: string
 {
+    use HasOptions;
+
     case Purchase = 'purchase';
     case Sale = 'sale';
     case Adjustment = 'adjustment';

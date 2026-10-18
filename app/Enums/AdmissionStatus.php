@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum AdmissionStatus: string
 {
+    use HasOptions;
+
     case Planned = 'planned';
     case Active = 'active';
     case Discharged = 'discharged';

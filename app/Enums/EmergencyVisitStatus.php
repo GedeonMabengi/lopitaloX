@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum EmergencyVisitStatus: string
 {
+    use HasOptions;
+
     case Waiting = 'waiting';
     case InTreatment = 'in_treatment';
     case Discharged = 'discharged';

@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum PaymentMethod: string
 {
+    use HasOptions;
+
     case Cash = 'cash';
     case CreditCard = 'credit_card';
     case BankTransfer = 'bank_transfer';

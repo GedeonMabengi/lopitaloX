@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum PrescriptionStatus: string
 {
+    use HasOptions;
+
     case Active = 'active';
     case Completed = 'completed';
     case Cancelled = 'cancelled';

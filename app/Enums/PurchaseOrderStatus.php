@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum PurchaseOrderStatus: string
 {
+    use HasOptions;
+
     case Draft = 'draft';
     case Ordered = 'ordered';
     case Received = 'received';

@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Concerns\HasOptions;
+
 enum AppointmentStatus: string
 {
+    use HasOptions;
+
     case Pending = 'pending';
     case Confirmed = 'confirmed';
     case CheckedIn = 'checked_in';
