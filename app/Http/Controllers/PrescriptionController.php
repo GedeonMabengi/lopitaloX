@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PrescriptionStatus;
 use App\Models\Prescription;
 use App\Models\Patient;
 use App\Models\Admission;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PrescriptionController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Prescription::with('patient', 'prescriber');
 
@@ -18,8 +22,16 @@ class PrescriptionController extends Controller
             $query->where('patient_id', $request->input('patient_id'));
         }
 
-        $prescriptions = $query->orderBy('prescribed_at', 'desc')->paginate(20);
-        return view('prescriptions.index', compact('prescriptions'));
+        return Inertia::render('prescriptions/index', [
+            'prescriptions' => $query->orderBy('prescribed_at', 'desc')->paginate(20)->withQueryString()
+                ->through(fn (Prescription $prescription) => [
+                    'id' => $prescription->id,
+                    'prescribedAt' => $prescription->prescribed_at->format('d/m/Y H:i'),
+                    'patient' => $prescription->patient->full_name,
+                    'prescriber' => $prescription->prescriber?->full_name,
+                    'status' => $prescription->status->toOption(),
+                ]),
+        ]);
     }
 
     public function create(Request $request)
@@ -45,14 +57,33 @@ class PrescriptionController extends Controller
         $data['status'] = 'active';
         $prescription = Prescription::create($data);
 
-        return redirect()->route('prescriptions.show', $prescription)
-            ->with('success', 'Prescription créée. Ajoutez maintenant les médicaments.');
+        $this->toast('Prescription créée. Ajoutez maintenant les médicaments.');
+
+        return redirect()->route('prescriptions.show', $prescription);
     }
 
-    public function show(Prescription $prescription)
+    public function show(Prescription $prescription): Response
     {
-        $prescription->load('patient', 'prescriber', 'admission', 'items.medication', 'items.dispensingRecords');
-        return view('prescriptions.show', compact('prescription'));
+        $prescription->load('patient', 'prescriber', 'items.medication');
+
+        return Inertia::render('prescriptions/show', [
+            'prescription' => [
+                'id' => $prescription->id,
+                'patient' => $prescription->patient->full_name,
+                'prescribedAt' => $prescription->prescribed_at->format('d/m/Y H:i'),
+                'prescriber' => $prescription->prescriber?->full_name,
+                'status' => $prescription->status->toOption(),
+                'notes' => $prescription->notes,
+                'items' => $prescription->items->map(fn ($item) => [
+                    'id' => $item->id,
+                    'medication' => $item->medication?->name ?? $item->medication_name,
+                    'dosage' => $item->dosage,
+                    'frequency' => $item->frequency,
+                    'duration' => $item->duration,
+                    'status' => $item->status->toOption(),
+                ]),
+            ],
+        ]);
     }
 
     public function edit(Prescription $prescription)
@@ -71,16 +102,18 @@ class PrescriptionController extends Controller
             'prescriber_id' => 'nullable|exists:staff,id',
             'prescribed_at' => 'required|date',
             'notes' => 'nullable|string',
-            'status' => 'nullable|in:active,completed,cancelled,expired',
+            'status' => ['nullable', Rule::enum(PrescriptionStatus::class)],
         ]);
 
         $prescription->update($data);
-        return redirect()->route('prescriptions.show', $prescription)->with('success', 'Prescription mise à jour.');
+        $this->toast('Prescription mise à jour.');
+        return redirect()->route('prescriptions.show', $prescription);
     }
 
     public function destroy(Prescription $prescription)
     {
         $prescription->delete();
-        return redirect()->route('prescriptions.index')->with('success', 'Prescription supprimée.');
+        $this->toast('Prescription supprimée.');
+        return redirect()->route('prescriptions.index');
     }
 }

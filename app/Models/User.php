@@ -68,6 +68,18 @@ class User extends Authenticatable implements PasskeyUser
         return $this->roles()->where('name', $role)->exists();
     }
 
+    /** Dossier patient lié au compte (portail patient). @return HasOne<Patient, $this> */
+    public function patient(): HasOne
+    {
+        return $this->hasOne(Patient::class);
+    }
+
+    /** Fiche personnel liée au compte (soignant, administratif). @return HasOne<Staff, $this> */
+    public function staff(): HasOne
+    {
+        return $this->hasOne(Staff::class);
+    }
+
     /** @return HasOne<UserProfile, $this> */
     public function profile(): HasOne
     {

@@ -14,8 +14,13 @@ class PurchaseOrderItem extends Model
         'medication_id',
         'quantity',
         'unit_price',
-        'total_price',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(fn (PurchaseOrderItem $item) => $item->purchaseOrder->recalculateTotal());
+        static::deleted(fn (PurchaseOrderItem $item) => $item->purchaseOrder->recalculateTotal());
+    }
 
     protected $casts = [
         'unit_price' => 'decimal:2',

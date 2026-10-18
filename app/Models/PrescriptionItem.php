@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
+use App\Enums\PrescriptionItemStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PrescriptionItem extends Model
 {
-    use HasFactory;
-
-    const STATUS_PRESCRIBED = 'prescribed';
-    const STATUS_DISPENSED = 'dispensed';
-    const STATUS_ADMINISTERED = 'administered';
-    const STATUS_STOPPED = 'stopped';
+    use Auditable, HasFactory;
 
     protected $fillable = [
         'prescription_id',
@@ -28,6 +25,7 @@ class PrescriptionItem extends Model
     ];
 
     protected $casts = [
+        'status' => PrescriptionItemStatus::class,
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];

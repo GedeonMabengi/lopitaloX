@@ -189,8 +189,7 @@ class PatientController extends Controller
             'emergency_contact_name' => 'nullable|string',
             'emergency_contact_phone' => 'nullable|string',
             'blood_group' => 'nullable|string|max:5',
-            'allergies' => 'nullable|array',
-            'medical_history' => 'nullable|array',
+            'medical_history' => 'nullable|string',
         ]);
 
         // Générer un code patient unique (ex: PAT0001)
@@ -225,8 +224,7 @@ class PatientController extends Controller
             'emergency_contact_name' => 'nullable|string',
             'emergency_contact_phone' => 'nullable|string',
             'blood_group' => 'nullable|string|max:5',
-            'allergies' => 'nullable|array',
-            'medical_history' => 'nullable|array',
+            'medical_history' => 'nullable|string',
         ]);
 
         $patient->update($data);
@@ -419,7 +417,6 @@ class MedicalRecordController extends Controller
             'objective' => 'nullable|string',
             'assessment' => 'nullable|string',
             'plan' => 'nullable|string',
-            'vital_signs' => 'nullable|array',
             'attachments' => 'nullable|array',
         ]);
 
@@ -452,7 +449,6 @@ class MedicalRecordController extends Controller
             'objective' => 'nullable|string',
             'assessment' => 'nullable|string',
             'plan' => 'nullable|string',
-            'vital_signs' => 'nullable|array',
             'attachments' => 'nullable|array',
         ]);
 

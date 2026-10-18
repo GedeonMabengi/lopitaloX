@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MedicalRecord extends Model
 {
-    use HasFactory;
+    use Auditable, HasFactory;
 
     protected $fillable = [
         'patient_id',
@@ -19,13 +20,15 @@ class MedicalRecord extends Model
         'objective',
         'assessment',
         'plan',
-        'vital_signs',
         'attachments',
     ];
 
     protected $casts = [
         'record_date' => 'datetime',
-        'vital_signs' => 'array',
+        'subjective' => 'encrypted',
+        'objective' => 'encrypted',
+        'assessment' => 'encrypted',
+        'plan' => 'encrypted',
         'attachments' => 'array',
     ];
 

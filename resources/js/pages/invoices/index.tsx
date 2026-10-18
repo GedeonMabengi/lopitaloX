@@ -1,55 +1,84 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import DataTable, { EmptyRow } from '@/components/data-table';
+import PageHeader from '@/components/page-header';
 import Pagination from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import invoices from '@/routes/invoices';
+import type { Option, Paginated } from '@/types';
 
-export default function InvoiceIndex({ invoices }: { invoices: { data: any[]; links: any[] } }) {
+type InvoiceRow = {
+    id: number;
+    code: string;
+    invoiceDate: string;
+    patient: string;
+    totalAmount: number;
+    paidAmount: number;
+    balanceDue: number;
+    status: Option;
+};
+
+const currency = new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+});
+
+export default function InvoiceIndex({
+    invoices: list,
+}: {
+    invoices: Paginated<InvoiceRow>;
+}) {
     return (
         <>
             <Head title="Factures" />
-            <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold">Factures</h1>
-                    <Button asChild>
-                        <Link href="/invoices/create">Ajouter</Link>
-                    </Button>
-                </div>
-                <Card>
-                    <CardContent className="p-0">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
-                                <thead className="border-b bg-muted/50">
-                                    <tr><th className="px-4 py-2 text-left font-medium">Bail</th><th className="px-4 py-2 text-left font-medium">Total</th><th className="px-4 py-2 text-left font-medium">Statut</th><th className="px-4 py-2 text-right font-medium">Actions</th></tr>
-                                </thead>
-                                <tbody className="divide-y">
-                                    {invoices.data.map((item) => (
-                                        <tr key={item.id} className="hover:bg-muted/30">
-                                            <td className="px-4 py-2">{String((item as any).lease_id ?? '')}</td><td className="px-4 py-2">{Number((item as any).total_amount ?? 0).toFixed(2)} €</td><td className="px-4 py-2"><StatusBadge status={String((item as any).status ?? '')} /></td>
-                                            <td className="px-4 py-2 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <Button asChild variant="outline" size="sm">
-                                                        <Link href={`/invoices/${item.id}`}>Voir</Link>
-                                                    </Button>
-                                                    <Button asChild variant="outline" size="sm">
-                                                        <Link href={`/invoices/${item.id}/edit`}>Modifier</Link>
-                                                    </Button>
-                                                    <Button asChild variant="destructive" size="sm">
-                                                        <Link href={`/invoices/${item.id}`} method="delete" as="button">Supprimer</Link>
-                                                    </Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Pagination links={invoices.links} />
+            <div className="flex flex-1 flex-col gap-6 p-4">
+                <PageHeader title="Factures" />
+
+                <DataTable>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>Patient</th>
+                            <th className="text-right">Montant total</th>
+                            <th className="text-right">Payé</th>
+                            <th className="text-right">Reste</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {list.data.length === 0 && (
+                            <EmptyRow colSpan={7}>Aucune facture.</EmptyRow>
+                        )}
+                        {list.data.map((invoice) => (
+                            <tr key={invoice.id}>
+                                <td>{invoice.code}</td>
+                                <td>{invoice.invoiceDate}</td>
+                                <td className="font-medium">
+                                    {invoice.patient}
+                                </td>
+                                <td className="text-right tabular-nums">
+                                    {currency.format(invoice.totalAmount)}
+                                </td>
+                                <td className="text-right tabular-nums">
+                                    {currency.format(invoice.paidAmount)}
+                                </td>
+                                <td className="text-right tabular-nums">
+                                    {currency.format(invoice.balanceDue)}
+                                </td>
+                                <td>
+                                    <StatusBadge status={invoice.status} />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </DataTable>
+
+                <Pagination links={list.links} />
             </div>
         </>
     );
 }
 
-InvoiceIndex.layout = { breadcrumbs: [{ title: 'Factures', href: '/invoices' }] };
+InvoiceIndex.layout = {
+    breadcrumbs: [{ title: 'Facturation', href: invoices.index() }],
+};

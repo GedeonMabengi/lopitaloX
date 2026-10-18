@@ -6,10 +6,12 @@ use App\Models\Invoice;
 use App\Models\Patient;
 use App\Models\Admission;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class InvoiceController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Invoice::with('patient');
 
@@ -17,8 +19,19 @@ class InvoiceController extends Controller
             $query->where('status', $request->input('status'));
         }
 
-        $invoices = $query->orderBy('invoice_date', 'desc')->paginate(20);
-        return view('invoices.index', compact('invoices'));
+        return Inertia::render('invoices/index', [
+            'invoices' => $query->orderBy('invoice_date', 'desc')->paginate(20)->withQueryString()
+                ->through(fn (Invoice $invoice) => [
+                    'id' => $invoice->id,
+                    'code' => $invoice->invoice_code,
+                    'invoiceDate' => $invoice->invoice_date->format('d/m/Y'),
+                    'patient' => $invoice->patient->full_name,
+                    'totalAmount' => (float) $invoice->total_amount,
+                    'paidAmount' => (float) $invoice->paid_amount,
+                    'balanceDue' => (float) $invoice->balance_due,
+                    'status' => $invoice->status->toOption(),
+                ]),
+        ]);
     }
 
     public function create()
@@ -39,16 +52,12 @@ class InvoiceController extends Controller
 
         $data['invoice_code'] = 'INV' . str_pad(Invoice::max('id') + 1, 6, '0', STR_PAD_LEFT);
         $data['status'] = 'draft';
-        $data['subtotal'] = 0;
-        $data['discount'] = 0;
-        $data['tax'] = 0;
-        $data['total_amount'] = 0;
-        $data['paid_amount'] = 0;
-        $data['balance_due'] = 0;
 
         $invoice = Invoice::create($data);
 
-        return redirect()->route('invoices.show', $invoice)->with('success', 'Facture créée. Ajoutez des lignes.');
+        $this->toast('Facture créée. Ajoutez des lignes.');
+
+        return redirect()->route('invoices.show', $invoice);
     }
 
     public function show(Invoice $invoice)
@@ -79,24 +88,29 @@ class InvoiceController extends Controller
         // Recalculer les totaux
         $invoice->recalculateTotals();
 
-        return redirect()->route('invoices.show', $invoice)->with('success', 'Facture mise à jour.');
+        $this->toast('Facture mise à jour.');
+
+        return redirect()->route('invoices.show', $invoice);
     }
 
     public function destroy(Invoice $invoice)
     {
         $invoice->delete();
-        return redirect()->route('invoices.index')->with('success', 'Facture supprimée.');
+        $this->toast('Facture supprimée.');
+        return redirect()->route('invoices.index');
     }
 
     public function issue(Invoice $invoice)
     {
         $invoice->update(['status' => 'issued']);
-        return back()->with('success', 'Facture émise.');
+        $this->toast('Facture émise.');
+        return back();
     }
 
     public function cancel(Invoice $invoice)
     {
         $invoice->update(['status' => 'cancelled']);
-        return back()->with('success', 'Facture annulée.');
+        $this->toast('Facture annulée.');
+        return back();
     }
 }

@@ -14,18 +14,18 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->date('date_of_birth');
-            $table->enum('gender', ['male', 'female', 'other']);
+            $table->string('gender');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone')->nullable();
             $table->string('blood_group', 5)->nullable();
-            $table->json('allergies')->nullable();
-            $table->json('medical_history')->nullable();
+            $table->text('medical_history')->nullable(); // chiffré (cast encrypted)
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['last_name', 'first_name']); // recherche par nom
         });
     }
 

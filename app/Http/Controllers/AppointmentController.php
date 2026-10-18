@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppointmentStatus;
 use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Staff;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class AppointmentController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Appointment::with('patient', 'staff', 'department');
 
@@ -22,16 +26,32 @@ class AppointmentController extends Controller
             $query->where('status', $request->input('status'));
         }
 
-        $appointments = $query->orderBy('scheduled_at')->paginate(20);
-        return view('appointments.index', compact('appointments'));
+        return Inertia::render('appointments/index', [
+            'filters' => $request->only('date', 'status'),
+            'statuses' => AppointmentStatus::options(),
+            'appointments' => $query->orderBy('scheduled_at')->paginate(20)->withQueryString()
+                ->through(fn (Appointment $appointment) => [
+                    'id' => $appointment->id,
+                    'scheduledAt' => $appointment->scheduled_at->format('d/m/Y H:i'),
+                    'patient' => $appointment->patient->full_name,
+                    'staff' => $appointment->staff?->full_name,
+                    'department' => $appointment->department?->name,
+                    'status' => $appointment->status->toOption(),
+                ]),
+        ]);
     }
 
-    public function create()
+    public function create(Request $request): Response
     {
-        $patients = Patient::orderBy('last_name')->get();
-        $staff = Staff::orderBy('last_name')->get();
-        $departments = Department::orderBy('name')->get();
-        return view('appointments.create', compact('patients', 'staff', 'departments'));
+        return Inertia::render('appointments/create', [
+            'selectedPatientId' => $request->integer('patient_id') ?: null,
+            'patients' => Patient::orderBy('last_name')->get()
+                ->map(fn (Patient $patient) => ['value' => (string) $patient->id, 'label' => "{$patient->full_name} ({$patient->patient_code})"]),
+            'staff' => Staff::orderBy('last_name')->get()
+                ->map(fn (Staff $member) => ['value' => (string) $member->id, 'label' => trim("{$member->full_name} ({$member->specialty})", ' ()')]),
+            'departments' => Department::orderBy('name')->get()
+                ->map(fn (Department $department) => ['value' => (string) $department->id, 'label' => $department->name]),
+        ]);
     }
 
     public function store(Request $request)
@@ -51,7 +71,9 @@ class AppointmentController extends Controller
 
         Appointment::create($data);
 
-        return redirect()->route('appointments.index')->with('success', 'Rendez-vous enregistré.');
+        $this->toast('Rendez-vous enregistré.');
+
+        return redirect()->route('appointments.index');
     }
 
     public function show(Appointment $appointment)
@@ -78,47 +100,54 @@ class AppointmentController extends Controller
             'end_at' => 'nullable|date|after:scheduled_at',
             'reason' => 'nullable|string',
             'notes' => 'nullable|string',
-            'status' => 'nullable|in:pending,confirmed,checked_in,completed,cancelled,no_show',
+            'status' => ['nullable', Rule::enum(AppointmentStatus::class)],
         ]);
 
         $appointment->update($data);
-        return redirect()->route('appointments.show', $appointment)->with('success', 'Rendez-vous mis à jour.');
+        $this->toast('Rendez-vous mis à jour.');
+        return redirect()->route('appointments.show', $appointment);
     }
 
     public function destroy(Appointment $appointment)
     {
         $appointment->delete();
-        return redirect()->route('appointments.index')->with('success', 'Rendez-vous supprimé.');
+        $this->toast('Rendez-vous supprimé.');
+        return redirect()->route('appointments.index');
     }
 
     // Actions spécifiques
     public function confirm(Appointment $appointment)
     {
         $appointment->update(['status' => 'confirmed']);
-        return back()->with('success', 'Rendez-vous confirmé.');
+        $this->toast('Rendez-vous confirmé.');
+        return back();
     }
 
     public function checkIn(Appointment $appointment)
     {
         $appointment->update(['status' => 'checked_in']);
-        return back()->with('success', 'Patient arrivé.');
+        $this->toast('Patient arrivé.');
+        return back();
     }
 
     public function complete(Appointment $appointment)
     {
         $appointment->update(['status' => 'completed']);
-        return back()->with('success', 'Consultation terminée.');
+        $this->toast('Consultation terminée.');
+        return back();
     }
 
     public function cancel(Appointment $appointment)
     {
         $appointment->update(['status' => 'cancelled']);
-        return back()->with('success', 'Rendez-vous annulé.');
+        $this->toast('Rendez-vous annulé.');
+        return back();
     }
 
     public function noShow(Appointment $appointment)
     {
         $appointment->update(['status' => 'no_show']);
-        return back()->with('success', 'Patient marqué comme absent.');
+        $this->toast('Patient marqué comme absent.');
+        return back();
     }
 }

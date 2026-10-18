@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\LabOrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LabOrder extends Model
 {
     use HasFactory;
-
-    const STATUS_PENDING = 'pending';
-    const STATUS_SAMPLE_COLLECTED = 'sample_collected';
-    const STATUS_IN_PROGRESS = 'in_progress';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'order_code',
@@ -23,12 +18,11 @@ class LabOrder extends Model
         'order_date',
         'status',
         'clinical_info',
-        'tests',
     ];
 
     protected $casts = [
+        'status' => LabOrderStatus::class,
         'order_date' => 'datetime',
-        'tests' => 'array',
     ];
 
     public function patient()

@@ -1,10 +1,10 @@
-Statut integration: le schema ci-dessous est integre dans `database/migrations/2026_08_23_000000_create_hospital_management_schema.php`.
+Statut integration: le schema ci-dessous est integre dans `database/migrations/`, une migration par table (les tables systeme Laravel sont regroupees dans les fichiers `0001_01_01_*`).
 
 Les anciennes migrations, seeders et factories du SaaS immobilier ont ete retirees du dossier `database`. Le seeder courant cree seulement l'utilisateur administrateur et les roles hospitaliers de base.
 
 Voici une proposition d’architecture de base de données pour une application de gestion hospitalière, sous forme de migrations Laravel (Eloquent). Elle couvre les modules essentiels : utilisateurs, patients, personnel, rendez-vous, admissions, dossier médical, prescriptions, pharmacie, laboratoire, imagerie, facturation.
 
-L’approche est modulaire et extensible. Les tables sont reliées par des clés étrangères avec contraintes d’intégrité. Certaines tables utilisent des colonnes JSON pour plus de flexibilité.
+L’approche est modulaire et extensible. Les tables sont reliées par des clés étrangères avec contraintes d’intégrité. Chaque information n’est stockée qu’à un seul endroit : allergies, constantes et tests de labo ont leur propre table plutôt qu’une colonne JSON.
 
 ---
 
@@ -51,18 +51,18 @@ Schema::create('patients', function (Blueprint $table) {
     $table->string('first_name');
     $table->string('last_name');
     $table->date('date_of_birth');
-    $table->enum('gender', ['male', 'female', 'other']);
+    $table->string('gender');
     $table->string('phone')->nullable();
     $table->string('email')->nullable();
     $table->text('address')->nullable();
     $table->string('emergency_contact_name')->nullable();
     $table->string('emergency_contact_phone')->nullable();
     $table->string('blood_group', 5)->nullable();
-    $table->json('allergies')->nullable(); // liste d'allergies
-    $table->json('medical_history')->nullable(); // antécédents
+    $table->text('medical_history')->nullable(); // antécédents (texte libre, chiffré) ; les allergies sont dans la table `allergies`
     $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // si le patient a un compte portail
     $table->timestamps();
     $table->softDeletes();
+    $table->index(['last_name', 'first_name']); // recherche par nom
 });
 
 // migration : create_staff_table (personnel médical et administratif)
@@ -73,7 +73,7 @@ Schema::create('staff', function (Blueprint $table) {
     $table->string('last_name');
     $table->string('email')->unique();
     $table->string('phone')->nullable();
-    $table->enum('gender', ['male', 'female', 'other']);
+    $table->string('gender');
     $table->date('date_of_birth')->nullable();
     $table->string('specialty')->nullable(); // pour les médecins
     $table->string('license_number')->nullable(); // numéro d'ordre
@@ -101,43 +101,44 @@ Schema::create('departments', function (Blueprint $table) {
 // migration : create_appointments_table
 Schema::create('appointments', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null'); // médecin ou autre soignant
     $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
     $table->dateTime('scheduled_at');
     $table->dateTime('end_at')->nullable();
-    $table->enum('status', ['pending', 'confirmed', 'checked_in', 'completed', 'cancelled', 'no_show'])->default('pending');
+    $table->string('status')->default('pending');
     $table->text('reason')->nullable(); // motif
     $table->text('notes')->nullable();
     $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
     $table->timestamps();
     $table->softDeletes();
+    $table->index(['staff_id', 'scheduled_at']); // planning d'un soignant
 });
 
 // migration : create_admissions_table (hospitalisations)
 Schema::create('admissions', function (Blueprint $table) {
     $table->id();
     $table->string('admission_code')->unique();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
     $table->foreignId('bed_id')->nullable()->constrained()->onDelete('set null');
     $table->foreignId('attending_doctor_id')->nullable()->constrained('staff')->onDelete('set null');
     $table->dateTime('admission_date');
     $table->dateTime('discharge_date')->nullable();
-    $table->enum('status', ['planned', 'active', 'discharged', 'transferred', 'cancelled'])->default('planned');
-    $table->text('diagnosis')->nullable();
+    $table->string('status')->default('planned');
+    $table->text('diagnosis')->nullable(); // chiffré
     $table->text('notes')->nullable();
     $table->timestamps();
     $table->softDeletes();
+    $table->index('status'); // hospitalisations en cours
 });
 
 // migration : create_beds_table
 Schema::create('beds', function (Blueprint $table) {
     $table->id();
     $table->string('bed_number')->unique();
-    $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
-    $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
-    $table->enum('status', ['available', 'occupied', 'cleaning', 'maintenance'])->default('available');
+    $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null'); // le service se déduit de la chambre
+    $table->string('status')->default('available');
     $table->timestamps();
 });
 
@@ -159,16 +160,15 @@ Schema::create('rooms', function (Blueprint $table) {
 // migration : create_medical_records_table
 Schema::create('medical_records', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-    $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade'); // si lié à une hospitalisation
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete(); // si lié à une hospitalisation
     $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null'); // soignant rédacteur
     $table->dateTime('record_date');
     $table->string('type'); // consultation, suivi, urgence, compte rendu, etc.
-    $table->text('subjective')->nullable(); // motif / anamnèse
+    $table->text('subjective')->nullable(); // motif / anamnèse (subjective, objective, assessment, plan : chiffrés)
     $table->text('objective')->nullable(); // examen clinique
     $table->text('assessment')->nullable(); // diagnostic
     $table->text('plan')->nullable(); // conduite à tenir
-    $table->json('vital_signs')->nullable(); // constantes
     $table->json('attachments')->nullable(); // liens vers documents
     $table->timestamps();
 });
@@ -176,7 +176,7 @@ Schema::create('medical_records', function (Blueprint $table) {
 // migration : create_allergies_table (plus structuré)
 Schema::create('allergies', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->string('allergen');
     $table->string('reaction')->nullable();
     $table->string('severity')->nullable(); // mild, moderate, severe
@@ -187,15 +187,15 @@ Schema::create('allergies', function (Blueprint $table) {
 // migration : create_vital_signs_table (suivi des constantes)
 Schema::create('vital_signs', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-    $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
     $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null');
     $table->dateTime('measured_at');
     $table->decimal('temperature', 4, 1)->nullable();
     $table->integer('heart_rate')->nullable();
     $table->integer('respiratory_rate')->nullable();
-    $table->string('blood_pressure_systolic', 3)->nullable();
-    $table->string('blood_pressure_diastolic', 3)->nullable();
+    $table->unsignedSmallInteger('blood_pressure_systolic')->nullable(); // mmHg
+    $table->unsignedSmallInteger('blood_pressure_diastolic')->nullable(); // mmHg
     $table->decimal('oxygen_saturation', 5, 2)->nullable();
     $table->decimal('weight', 6, 2)->nullable();
     $table->decimal('height', 5, 2)->nullable();
@@ -212,11 +212,11 @@ Schema::create('vital_signs', function (Blueprint $table) {
 // migration : create_prescriptions_table
 Schema::create('prescriptions', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-    $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
     $table->foreignId('prescriber_id')->nullable()->constrained('staff')->onDelete('set null');
     $table->dateTime('prescribed_at');
-    $table->enum('status', ['active', 'completed', 'cancelled', 'expired'])->default('active');
+    $table->string('status')->default('active');
     $table->text('notes')->nullable();
     $table->timestamps();
 });
@@ -233,7 +233,7 @@ Schema::create('prescription_items', function (Blueprint $table) {
     $table->text('instructions')->nullable();
     $table->dateTime('start_date')->nullable();
     $table->dateTime('end_date')->nullable();
-    $table->enum('status', ['prescribed', 'dispensed', 'administered', 'stopped'])->default('prescribed');
+    $table->string('status')->default('prescribed');
     $table->timestamps();
 });
 
@@ -246,10 +246,20 @@ Schema::create('medications', function (Blueprint $table) {
     $table->string('strength')->nullable();
     $table->string('unit')->nullable();
     $table->decimal('price', 10, 2)->default(0);
-    $table->integer('stock_quantity')->default(0);
-    $table->integer('reorder_level')->default(10);
-    $table->date('expiry_date')->nullable();
+    $table->integer('reorder_level')->default(10); // stock et péremption : voir medication_batches
     $table->timestamps();
+});
+
+// migration : create_medication_batches_table (lots : le stock et la péremption vivent ici)
+Schema::create('medication_batches', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('medication_id')->constrained()->restrictOnDelete();
+    $table->string('batch_number');
+    $table->date('expiry_date');
+    $table->unsignedInteger('quantity')->default(0); // modifié uniquement via MedicationBatch::move()
+    $table->timestamps();
+    $table->unique(['medication_id', 'batch_number']);
+    $table->index(['medication_id', 'expiry_date']);
 });
 ```
 
@@ -261,7 +271,7 @@ Schema::create('medications', function (Blueprint $table) {
 // migration : create_dispensing_records_table (administration / dispensation)
 Schema::create('dispensing_records', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('prescription_item_id')->constrained()->onDelete('cascade');
+    $table->foreignId('prescription_item_id')->constrained()->restrictOnDelete();
     $table->foreignId('medication_id')->nullable()->constrained()->onDelete('set null');
     $table->foreignId('dispensed_by')->nullable()->constrained('staff')->onDelete('set null');
     $table->foreignId('administered_by')->nullable()->constrained('staff')->onDelete('set null');
@@ -275,9 +285,10 @@ Schema::create('dispensing_records', function (Blueprint $table) {
 // migration : create_stock_transactions_table (mouvements de stock)
 Schema::create('stock_transactions', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('medication_id')->constrained()->onDelete('cascade');
-    $table->enum('type', ['purchase', 'sale', 'adjustment', 'transfer_in', 'transfer_out']);
-    $table->integer('quantity');
+    $table->foreignId('medication_id')->constrained()->restrictOnDelete();
+    $table->foreignId('medication_batch_id')->constrained()->restrictOnDelete();
+    $table->string('type');
+    $table->integer('quantity'); // signé : + entrée, - sortie
     $table->decimal('unit_price', 10, 2)->nullable();
     $table->foreignId('performed_by')->nullable()->constrained('users')->onDelete('set null');
     $table->text('notes')->nullable();
@@ -302,7 +313,7 @@ Schema::create('purchase_orders', function (Blueprint $table) {
     $table->foreignId('supplier_id')->nullable()->constrained()->onDelete('set null');
     $table->dateTime('order_date');
     $table->dateTime('expected_delivery_date')->nullable();
-    $table->enum('status', ['draft', 'ordered', 'received', 'cancelled'])->default('draft');
+    $table->string('status')->default('draft');
     $table->decimal('total_amount', 12, 2)->default(0);
     $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
     $table->timestamps();
@@ -315,7 +326,7 @@ Schema::create('purchase_order_items', function (Blueprint $table) {
     $table->foreignId('medication_id')->nullable()->constrained()->onDelete('set null');
     $table->integer('quantity');
     $table->decimal('unit_price', 10, 2);
-    $table->decimal('total_price', 12, 2);
+    $table->decimal('total_price', 12, 2)->storedAs('quantity * unit_price');
     $table->timestamps();
 });
 ```
@@ -329,21 +340,20 @@ Schema::create('purchase_order_items', function (Blueprint $table) {
 Schema::create('lab_orders', function (Blueprint $table) {
     $table->id();
     $table->string('order_code')->unique();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-    $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
     $table->foreignId('ordered_by')->nullable()->constrained('staff')->onDelete('set null');
     $table->dateTime('order_date');
-    $table->enum('status', ['pending', 'sample_collected', 'in_progress', 'completed', 'cancelled'])->default('pending');
+    $table->string('status')->default('pending');
     $table->text('clinical_info')->nullable();
-    $table->json('tests'); // liste des tests demandés
     $table->timestamps();
 });
 
 // migration : create_lab_results_table
 Schema::create('lab_results', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('lab_order_id')->constrained()->onDelete('cascade');
-    $table->string('test_name');
+    $table->foreignId('lab_order_id')->constrained()->restrictOnDelete();
+    $table->string('test_name'); // une ligne par test demandé, créée à la commande (résultat vide)
     $table->string('result_value')->nullable();
     $table->string('unit')->nullable();
     $table->string('reference_range')->nullable();
@@ -358,13 +368,13 @@ Schema::create('lab_results', function (Blueprint $table) {
 Schema::create('imaging_orders', function (Blueprint $table) {
     $table->id();
     $table->string('order_code')->unique();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-    $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
     $table->foreignId('ordered_by')->nullable()->constrained('staff')->onDelete('set null');
     $table->dateTime('order_date');
     $table->string('imaging_type'); // X-ray, MRI, CT, Ultrasound
     $table->string('body_part')->nullable();
-    $table->enum('status', ['pending', 'scheduled', 'performed', 'reported', 'cancelled'])->default('pending');
+    $table->string('status')->default('pending');
     $table->text('clinical_info')->nullable();
     $table->timestamps();
 });
@@ -372,7 +382,7 @@ Schema::create('imaging_orders', function (Blueprint $table) {
 // migration : create_imaging_reports_table
 Schema::create('imaging_reports', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('imaging_order_id')->constrained()->onDelete('cascade');
+    $table->foreignId('imaging_order_id')->constrained()->restrictOnDelete();
     $table->foreignId('radiologist_id')->nullable()->constrained('staff')->onDelete('set null');
     $table->text('findings')->nullable();
     $table->text('impression')->nullable();
@@ -391,17 +401,18 @@ Schema::create('imaging_reports', function (Blueprint $table) {
 Schema::create('invoices', function (Blueprint $table) {
     $table->id();
     $table->string('invoice_code')->unique();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->foreignId('admission_id')->nullable()->constrained()->onDelete('set null');
     $table->foreignId('appointment_id')->nullable()->constrained()->onDelete('set null');
     $table->dateTime('invoice_date');
+    // subtotal et paid_amount : agrégats des lignes et paiements, tenus à jour par Invoice::recalculateTotals()
     $table->decimal('subtotal', 12, 2)->default(0);
     $table->decimal('discount', 12, 2)->default(0);
     $table->decimal('tax', 12, 2)->default(0);
-    $table->decimal('total_amount', 12, 2)->default(0);
     $table->decimal('paid_amount', 12, 2)->default(0);
-    $table->decimal('balance_due', 12, 2)->default(0);
-    $table->enum('status', ['draft', 'issued', 'partially_paid', 'paid', 'overdue', 'cancelled'])->default('draft');
+    $table->decimal('total_amount', 12, 2)->storedAs('subtotal - discount + tax');
+    $table->decimal('balance_due', 12, 2)->storedAs('subtotal - discount + tax - paid_amount');
+    $table->string('status')->default('draft');
     $table->text('notes')->nullable();
     $table->timestamps();
     $table->softDeletes();
@@ -415,9 +426,8 @@ Schema::create('invoice_items', function (Blueprint $table) {
     $table->string('description');
     $table->integer('quantity')->default(1);
     $table->decimal('unit_price', 10, 2);
-    $table->decimal('total_price', 12, 2);
-    $table->foreignId('reference_id')->nullable(); // polymorphic link to source record
-    $table->string('reference_type')->nullable();
+    $table->decimal('total_price', 12, 2)->storedAs('quantity * unit_price');
+    $table->nullableMorphs('reference'); // lien polymorphe vers la source (consultation, médicament, examen...)
     $table->timestamps();
 });
 
@@ -425,10 +435,10 @@ Schema::create('invoice_items', function (Blueprint $table) {
 Schema::create('payments', function (Blueprint $table) {
     $table->id();
     $table->string('payment_code')->unique();
-    $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
+    $table->foreignId('invoice_id')->constrained()->restrictOnDelete();
     $table->dateTime('payment_date');
     $table->decimal('amount', 12, 2);
-    $table->enum('payment_method', ['cash', 'credit_card', 'bank_transfer', 'insurance', 'mobile_money']);
+    $table->string('payment_method');
     $table->string('transaction_reference')->nullable();
     $table->foreignId('received_by')->nullable()->constrained('users')->onDelete('set null');
     $table->timestamps();
@@ -443,13 +453,13 @@ Schema::create('payments', function (Blueprint $table) {
 // migration : create_surgeries_table
 Schema::create('surgeries', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->foreignId('admission_id')->nullable()->constrained()->onDelete('set null');
     $table->foreignId('surgeon_id')->nullable()->constrained('staff')->onDelete('set null');
     $table->dateTime('scheduled_at');
     $table->dateTime('end_at')->nullable();
     $table->string('surgery_type');
-    $table->enum('status', ['scheduled', 'in_progress', 'completed', 'cancelled'])->default('scheduled');
+    $table->string('status')->default('scheduled');
     $table->foreignId('operating_room_id')->nullable()->constrained()->onDelete('set null');
     $table->text('notes')->nullable();
     $table->timestamps();
@@ -460,19 +470,33 @@ Schema::create('operating_rooms', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->string('location')->nullable();
-    $table->enum('status', ['available', 'occupied', 'cleaning', 'maintenance'])->default('available');
+    $table->string('status')->default('available');
     $table->timestamps();
 });
 
 // migration : create_emergency_visits_table
 Schema::create('emergency_visits', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+    $table->foreignId('patient_id')->constrained()->restrictOnDelete();
     $table->dateTime('arrival_time');
     $table->string('triage_level')->nullable(); // 1-5
     $table->text('chief_complaint')->nullable();
-    $table->enum('status', ['waiting', 'in_treatment', 'discharged', 'admitted', 'left_without_being_seen'])->default('waiting');
+    $table->string('status')->default('waiting');
     $table->foreignId('attending_staff_id')->nullable()->constrained('staff')->onDelete('set null');
+    $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete(); // si le patient est hospitalisé
+    $table->timestamps();
+});
+
+// migration : create_audit_logs_table (traçabilité des données médicales)
+Schema::create('audit_logs', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+    $table->string('action'); // created, updated, deleted
+    $table->morphs('auditable');
+    $table->json('old_values')->nullable();
+    $table->json('new_values')->nullable();
+    $table->string('ip_address', 45)->nullable();
+    $table->text('user_agent')->nullable();
     $table->timestamps();
 });
 ```
@@ -482,9 +506,15 @@ Schema::create('emergency_visits', function (Blueprint $table) {
 ## Remarques importantes
 
 - Toutes les migrations utilisent `foreignId()->constrained()` pour assurer l’intégrité référentielle.
-- Des index supplémentaires peuvent être ajoutés avec `->index()` sur les colonnes fréquemment interrogées (ex: `patient_id`, `status`).
-- Les colonnes `json` permettent de stocker des structures flexibles (ex: constantes, résultats de labo complexes).
-- Pour une application réelle, il faudra ajouter des migrations pour la gestion des documents, des consentements, des audits, etc.
+- Index : les clés étrangères sont indexées automatiquement ; des index composites couvrent les requêtes fréquentes (planning d'un soignant, hospitalisations en cours, recherche patient par nom).
+- Traçabilité : les modèles médicaux (`Patient`, `Admission`, `MedicalRecord`, `Allergy`, `VitalSign`, `Prescription`, `PrescriptionItem`, `DispensingRecord`, `LabResult`, `ImagingReport`) utilisent le trait `App\Models\Concerns\Auditable` : chaque création/modification/suppression écrit une ligne dans `audit_logs` (qui, quand, IP, anciennes et nouvelles valeurs). Les écritures via `DB::table()` contournent le journal.
+- Chiffrement : `medical_records.subjective/objective/assessment/plan`, `admissions.diagnosis` et `patients.medical_history` utilisent le cast `encrypted` (clé `APP_KEY`). Ces colonnes ne sont pas interrogeables en SQL (pas de `where`/`like`) et restent chiffrées dans `audit_logs`. Perdre ou changer `APP_KEY` sans `APP_PREVIOUS_KEYS` rend ces données illisibles.
+- Suppressions : les données médicales et financières (dossiers, constantes, prescriptions, labo, imagerie, factures, paiements) utilisent `restrictOnDelete()` : on ne peut pas supprimer définitivement un patient, une admission ou une facture qui a un historique. Les patients, admissions, rendez-vous et factures utilisent `softDeletes`. La cascade est réservée aux lignes qui n'existent pas sans leur parent (`role_user`, `prescription_items`, `invoice_items`, `purchase_order_items`).
+- Montants : `total_price`, `total_amount` et `balance_due` sont des colonnes générées (`storedAs`) — on ne les écrit jamais. Les agrégats `invoices.subtotal`/`paid_amount` et `purchase_orders.total_amount` sont recalculés automatiquement à chaque création/modification/suppression d'une ligne ou d'un paiement (événements des modèles).
+- Stock : il vit dans `medication_batches.quantity` (un lot = un numéro, une péremption, une quantité). Toute entrée/sortie passe par `MedicationBatch::move($type, $quantite)`, qui met à jour le lot et écrit la `stock_transaction` dans une même transaction (stock négatif refusé). `Medication->stock_quantity` et `->expiry_date` sont calculés depuis les lots.
+- Statuts et types : colonnes `string` (pas d'`enum` SQL, qui oblige à écrire une migration pour ajouter une valeur). Les valeurs autorisées sont définies par les enums PHP de `app/Enums` (castés dans les modèles, avec `label()` pour l'affichage en français) et validées avec `Rule::enum()`.
+- Pas de doublon JSON : une information = une table (`allergies`, `vital_signs`, `lab_results`). Le JSON reste seulement pour `medical_records.attachments`.
+- Pour une application réelle, il faudra ajouter des migrations pour la gestion des documents, des consentements, etc.
 - Pensez à exécuter `php artisan migrate` après avoir créé ces fichiers.
 
 Cette architecture est un point de départ solide. Elle peut être étendue en fonction des besoins spécifiques de l’hôpital.

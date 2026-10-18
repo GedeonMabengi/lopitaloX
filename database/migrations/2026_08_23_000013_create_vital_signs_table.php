@@ -10,15 +10,15 @@ return new class extends Migration
     {
         Schema::create('vital_signs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
-            $table->foreignId('admission_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('patient_id')->constrained()->restrictOnDelete();
+            $table->foreignId('admission_id')->nullable()->constrained()->restrictOnDelete();
             $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null');
             $table->dateTime('measured_at');
             $table->decimal('temperature', 4, 1)->nullable();
             $table->integer('heart_rate')->nullable();
             $table->integer('respiratory_rate')->nullable();
-            $table->string('blood_pressure_systolic', 3)->nullable();
-            $table->string('blood_pressure_diastolic', 3)->nullable();
+            $table->unsignedSmallInteger('blood_pressure_systolic')->nullable();
+            $table->unsignedSmallInteger('blood_pressure_diastolic')->nullable();
             $table->decimal('oxygen_saturation', 5, 2)->nullable();
             $table->decimal('weight', 6, 2)->nullable();
             $table->decimal('height', 5, 2)->nullable();

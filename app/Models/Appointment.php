@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AppointmentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,13 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Appointment extends Model
 {
     use HasFactory, SoftDeletes;
-
-    const STATUS_PENDING = 'pending';
-    const STATUS_CONFIRMED = 'confirmed';
-    const STATUS_CHECKED_IN = 'checked_in';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_CANCELLED = 'cancelled';
-    const STATUS_NO_SHOW = 'no_show';
 
     protected $fillable = [
         'patient_id',
@@ -30,6 +24,7 @@ class Appointment extends Model
     ];
 
     protected $casts = [
+        'status' => AppointmentStatus::class,
         'scheduled_at' => 'datetime',
         'end_at' => 'datetime',
     ];

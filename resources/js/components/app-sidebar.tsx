@@ -1,7 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { CalendarDays, LayoutGrid, Pill, Receipt, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -14,27 +13,19 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import appointments from '@/routes/appointments';
+import invoices from '@/routes/invoices';
+import patients from '@/routes/patients';
+import prescriptions from '@/routes/prescriptions';
 import type { NavItem } from '@/types';
 
+// Seuls les modules qui ont un contrôleur figurent ici : en ajouter un au fur et à mesure.
 const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+    { title: 'Tableau de bord', href: dashboard(), icon: LayoutGrid },
+    { title: 'Patients', href: patients.index(), icon: Users },
+    { title: 'Rendez-vous', href: appointments.index(), icon: CalendarDays },
+    { title: 'Prescriptions', href: prescriptions.index(), icon: Pill },
+    { title: 'Facturation', href: invoices.index(), icon: Receipt },
 ];
 
 export function AppSidebar() {
@@ -57,7 +48,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

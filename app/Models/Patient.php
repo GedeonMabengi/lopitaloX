@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Auditable;
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
-    use HasFactory, SoftDeletes;
+    use Auditable, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'patient_code',
@@ -22,15 +24,14 @@ class Patient extends Model
         'emergency_contact_name',
         'emergency_contact_phone',
         'blood_group',
-        'allergies',
         'medical_history',
         'user_id',
     ];
 
     protected $casts = [
+        'gender' => Gender::class,
         'date_of_birth' => 'date',
-        'allergies' => 'array',
-        'medical_history' => 'array',
+        'medical_history' => 'encrypted',
     ];
 
     public function getFullNameAttribute()
@@ -58,7 +59,7 @@ class Patient extends Model
         return $this->hasMany(MedicalRecord::class);
     }
 
-    public function allergiesList()
+    public function allergies()
     {
         return $this->hasMany(Allergy::class);
     }

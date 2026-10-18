@@ -2,32 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
-use App\Models\Appointment;
 use App\Models\Admission;
+use App\Models\Appointment;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
+use App\Models\Patient;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        $stats = [
-            'total_patients' => Patient::count(),
-            'appointments_today' => Appointment::whereDate('scheduled_at', today())->count(),
-            'active_admissions' => Admission::where('status', 'active')->count(),
-            'revenue_this_month' => Invoice::whereMonth('invoice_date', now()->month)
-                ->whereYear('invoice_date', now()->year)
-                ->sum('total_amount'),
-        ];
-
-        $recent_patients = Patient::latest()->take(5)->get();
-        $upcoming_appointments = Appointment::where('scheduled_at', '>=', now())
-            ->with('patient', 'staff')
-            ->orderBy('scheduled_at')
-            ->take(10)
-            ->get();
-
-        return view('dashboard', compact('stats', 'recent_patients', 'upcoming_appointments'));
+        return Inertia::render('dashboard', [
+            'stats' => [
+                'totalPatients' => Patient::count(),
+                'appointmentsToday' => Appointment::whereDate('scheduled_at', today())->count(),
+                'activeAdmissions' => Admission::where('status', 'active')->count(),
+                'revenueThisMonth' => (float) Invoice::whereMonth('invoice_date', now()->month)
+                    ->whereYear('invoice_date', now()->year)
+                    ->sum('total_amount'),
+            ],
+            'upcomingAppointments' => Appointment::where('scheduled_at', '>=', now())
+                ->with('patient', 'staff')
+                ->orderBy('scheduled_at')
+                ->take(10)
+                ->get()
+                ->map(fn (Appointment $appointment) => [
+                    'id' => $appointment->id,
+                    'patient' => $appointment->patient->full_name,
+                    'staff' => $appointment->staff?->full_name,
+                    'scheduledAt' => $appointment->scheduled_at->format('d/m/Y H:i'),
+                    'status' => $appointment->status->toOption(),
+                ]),
+            'recentPatients' => Patient::latest()->take(5)->get()
+                ->map(fn (Patient $patient) => [
+                    'id' => $patient->id,
+                    'fullName' => $patient->full_name,
+                    'code' => $patient->patient_code,
+                    'createdAt' => $patient->created_at->diffForHumans(),
+                ]),
+        ]);
     }
 }

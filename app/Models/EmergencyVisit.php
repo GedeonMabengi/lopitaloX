@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\EmergencyVisitStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class EmergencyVisit extends Model
 {
     use HasFactory;
-
-    const STATUS_WAITING = 'waiting';
-    const STATUS_IN_TREATMENT = 'in_treatment';
-    const STATUS_DISCHARGED = 'discharged';
-    const STATUS_ADMITTED = 'admitted';
-    const STATUS_LEFT_WITHOUT_BEING_SEEN = 'left_without_being_seen';
 
     protected $fillable = [
         'patient_id',
@@ -22,15 +17,22 @@ class EmergencyVisit extends Model
         'chief_complaint',
         'status',
         'attending_staff_id',
+        'admission_id',
     ];
 
     protected $casts = [
+        'status' => EmergencyVisitStatus::class,
         'arrival_time' => 'datetime',
     ];
 
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function admission()
+    {
+        return $this->belongsTo(Admission::class);
     }
 
     public function attendingStaff()

@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\SurgeryStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Surgery extends Model
 {
     use HasFactory;
-
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_IN_PROGRESS = 'in_progress';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'patient_id',
@@ -27,6 +23,7 @@ class Surgery extends Model
     ];
 
     protected $casts = [
+        'status' => SurgeryStatus::class,
         'scheduled_at' => 'datetime',
         'end_at' => 'datetime',
     ];
