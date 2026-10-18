@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientPortalController::book
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 export const book = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ book.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::book
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 book.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ book.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::book
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 book.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ book.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::book
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
     const bookForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ book.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::book
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
         bookForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

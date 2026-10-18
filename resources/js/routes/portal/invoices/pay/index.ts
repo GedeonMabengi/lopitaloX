@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientPortalController::process
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 export const process = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ process.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::process
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 process.url = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ process.url = (args: { invoice: number | { id: number } } | [invoice: number | {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::process
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 process.post = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ process.post = (args: { invoice: number | { id: number } } | [invoice: number | 
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::process
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
     const processForm = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ process.post = (args: { invoice: number | { id: number } } | [invoice: number | 
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::process
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
         processForm.post = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import payF2d398 from './pay'
 /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 export const pay = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ pay.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 pay.url = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -50,7 +50,7 @@ pay.url = (args: { invoice: number | { id: number } } | [invoice: number | { id:
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 pay.get = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ pay.get = (args: { invoice: number | { id: number } } | [invoice: number | { id:
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 pay.head = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ pay.head = (args: { invoice: number | { id: number } } | [invoice: number | { id
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
     const payForm = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ pay.head = (args: { invoice: number | { id: number } } | [invoice: number | { id
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
         payForm.get = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -88,7 +88,7 @@ pay.head = (args: { invoice: number | { id: number } } | [invoice: number | { id
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::pay
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
         payForm.head = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

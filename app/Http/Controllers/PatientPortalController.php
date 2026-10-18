@@ -5,43 +5,47 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
 use App\Models\Invoice;
+use App\Models\Patient;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PatientPortalController extends Controller
 {
-    public function dashboard()
+    public function dashboard(): Response
     {
-        $patient = auth()->user()->patient;
-        if (!$patient) {
-            abort(403, 'Compte patient non associé.');
-        }
+        $patient = $this->patient();
 
-        $upcomingAppointments = Appointment::where('patient_id', $patient->id)
-            ->where('scheduled_at', '>=', now())
-            ->orderBy('scheduled_at')
-            ->take(5)
-            ->get();
-
-        $recentRecords = MedicalRecord::where('patient_id', $patient->id)
-            ->latest('record_date')
-            ->take(5)
-            ->get();
-
-        $unpaidInvoices = Invoice::where('patient_id', $patient->id)
-            ->where('balance_due', '>', 0)
-            ->get();
-
-        return view('portal.dashboard', compact('patient', 'upcomingAppointments', 'recentRecords', 'unpaidInvoices'));
+        return Inertia::render('portal/dashboard', [
+            'patient' => ['fullName' => $patient->full_name],
+            'counts' => [
+                'upcomingAppointments' => Appointment::where('patient_id', $patient->id)->where('scheduled_at', '>=', now())->count(),
+                'medicalRecords' => MedicalRecord::where('patient_id', $patient->id)->count(),
+                'unpaidInvoices' => Invoice::where('patient_id', $patient->id)->where('balance_due', '>', 0)->count(),
+            ],
+        ]);
     }
 
-    public function appointments()
+    public function appointments(): Response
     {
-        $patient = auth()->user()->patient;
-        $appointments = Appointment::where('patient_id', $patient->id)
-            ->orderBy('scheduled_at', 'desc')
-            ->paginate(10);
-        return view('portal.appointments', compact('appointments'));
+        return Inertia::render('portal/appointments', [
+            'appointments' => Appointment::where('patient_id', $this->patient()->id)
+                ->with('staff')
+                ->orderBy('scheduled_at', 'desc')
+                ->paginate(10)
+                ->through(fn (Appointment $appointment) => [
+                    'id' => $appointment->id,
+                    'scheduledAt' => $appointment->scheduled_at->format('d/m/Y H:i'),
+                    'staff' => $appointment->staff?->full_name,
+                    'status' => $appointment->status->toOption(),
+                ]),
+        ]);
+    }
+
+    private function patient(): Patient
+    {
+        return auth()->user()->patient ?? abort(403, 'Compte patient non associé.');
     }
 
     public function bookAppointment(Request $request)

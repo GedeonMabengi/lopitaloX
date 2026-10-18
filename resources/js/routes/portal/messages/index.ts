@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientPortalController::send
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::send
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 send.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ send.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::send
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::send
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
     const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::send
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
         sendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

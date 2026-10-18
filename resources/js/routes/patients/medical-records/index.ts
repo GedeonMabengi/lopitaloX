@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
 export const index = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
 index.url = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ index.url = (args: { patient: number | { id: number } } | [patient: number | { i
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
 index.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ index.get = (args: { patient: number | { id: number } } | [patient: number | { i
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
 index.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ index.head = (args: { patient: number | { id: number } } | [patient: number | { 
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
     const indexForm = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ index.head = (args: { patient: number | { id: number } } | [patient: number | { 
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
         indexForm.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ index.head = (args: { patient: number | { id: number } } | [patient: number | { 
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/patients/{patient}/medical-records'
  */
         indexForm.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

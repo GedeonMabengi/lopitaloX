@@ -40,9 +40,7 @@ use App\Http\Controllers\PatientPortalController;
 | Connexion, inscription, déconnexion, mot de passe oublié et double
 | authentification sont fournis par Fortify (voir config/fortify.php).
 */
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::inertia('/', 'welcome')->name('home');
 
 /*
 |--------------------------------------------------------------------------

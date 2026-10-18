@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ dashboard.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
     const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
         dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::dashboard
- * @see app/Http/Controllers/PatientPortalController.php:13
+ * @see app/Http/Controllers/PatientPortalController.php:16
  * @route '/portal'
  */
         dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ appointments.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -112,7 +112,7 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -122,7 +122,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
     const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -132,7 +132,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
         appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -141,7 +141,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::appointments
- * @see app/Http/Controllers/PatientPortalController.php:38
+ * @see app/Http/Controllers/PatientPortalController.php:30
  * @route '/portal/appointments'
  */
         appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -157,7 +157,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     appointments.form = appointmentsForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::bookAppointment
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 export const bookAppointment = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -172,7 +172,7 @@ bookAppointment.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::bookAppointment
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 bookAppointment.url = (options?: RouteQueryOptions) => {
@@ -181,7 +181,7 @@ bookAppointment.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::bookAppointment
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
 bookAppointment.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -191,7 +191,7 @@ bookAppointment.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::bookAppointment
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
     const bookAppointmentForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -201,7 +201,7 @@ bookAppointment.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::bookAppointment
- * @see app/Http/Controllers/PatientPortalController.php:47
+ * @see app/Http/Controllers/PatientPortalController.php:51
  * @route '/portal/appointments'
  */
         bookAppointmentForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -212,7 +212,7 @@ bookAppointment.post = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
     bookAppointment.form = bookAppointmentForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
 export const medicalRecords = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -227,7 +227,7 @@ medicalRecords.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
 medicalRecords.url = (options?: RouteQueryOptions) => {
@@ -236,7 +236,7 @@ medicalRecords.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
 medicalRecords.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -245,7 +245,7 @@ medicalRecords.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
 medicalRecords.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -255,7 +255,7 @@ medicalRecords.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
     const medicalRecordsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -265,7 +265,7 @@ medicalRecords.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
         medicalRecordsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -274,7 +274,7 @@ medicalRecords.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::medicalRecords
- * @see app/Http/Controllers/PatientPortalController.php:53
+ * @see app/Http/Controllers/PatientPortalController.php:57
  * @route '/portal/medical-records'
  */
         medicalRecordsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -290,7 +290,7 @@ medicalRecords.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => 
     medicalRecords.form = medicalRecordsForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
 export const results = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -305,7 +305,7 @@ results.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
 results.url = (options?: RouteQueryOptions) => {
@@ -314,7 +314,7 @@ results.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
 results.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -323,7 +323,7 @@ results.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
 results.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -333,7 +333,7 @@ results.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
     const resultsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -343,7 +343,7 @@ results.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
         resultsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -352,7 +352,7 @@ results.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::results
- * @see app/Http/Controllers/PatientPortalController.php:62
+ * @see app/Http/Controllers/PatientPortalController.php:66
  * @route '/portal/results'
  */
         resultsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -368,7 +368,7 @@ results.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     results.form = resultsForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
 export const invoices = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -383,7 +383,7 @@ invoices.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
 invoices.url = (options?: RouteQueryOptions) => {
@@ -392,7 +392,7 @@ invoices.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
 invoices.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -401,7 +401,7 @@ invoices.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
 invoices.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -411,7 +411,7 @@ invoices.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
     const invoicesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -421,7 +421,7 @@ invoices.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
         invoicesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -430,7 +430,7 @@ invoices.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::invoices
- * @see app/Http/Controllers/PatientPortalController.php:68
+ * @see app/Http/Controllers/PatientPortalController.php:72
  * @route '/portal/invoices'
  */
         invoicesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -446,7 +446,7 @@ invoices.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     invoices.form = invoicesForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 export const payInvoice = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -461,7 +461,7 @@ payInvoice.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 payInvoice.url = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -494,7 +494,7 @@ payInvoice.url = (args: { invoice: number | { id: number } } | [invoice: number 
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 payInvoice.get = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -503,7 +503,7 @@ payInvoice.get = (args: { invoice: number | { id: number } } | [invoice: number 
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
 payInvoice.head = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -513,7 +513,7 @@ payInvoice.head = (args: { invoice: number | { id: number } } | [invoice: number
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
     const payInvoiceForm = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -523,7 +523,7 @@ payInvoice.head = (args: { invoice: number | { id: number } } | [invoice: number
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
         payInvoiceForm.get = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -532,7 +532,7 @@ payInvoice.head = (args: { invoice: number | { id: number } } | [invoice: number
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::payInvoice
- * @see app/Http/Controllers/PatientPortalController.php:77
+ * @see app/Http/Controllers/PatientPortalController.php:81
  * @route '/portal/invoices/{invoice}/pay'
  */
         payInvoiceForm.head = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -548,7 +548,7 @@ payInvoice.head = (args: { invoice: number | { id: number } } | [invoice: number
     payInvoice.form = payInvoiceForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::processPayment
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 export const processPayment = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -563,7 +563,7 @@ processPayment.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::processPayment
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 processPayment.url = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -596,7 +596,7 @@ processPayment.url = (args: { invoice: number | { id: number } } | [invoice: num
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::processPayment
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
 processPayment.post = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -606,7 +606,7 @@ processPayment.post = (args: { invoice: number | { id: number } } | [invoice: nu
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::processPayment
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
     const processPaymentForm = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -616,7 +616,7 @@ processPayment.post = (args: { invoice: number | { id: number } } | [invoice: nu
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::processPayment
- * @see app/Http/Controllers/PatientPortalController.php:87
+ * @see app/Http/Controllers/PatientPortalController.php:91
  * @route '/portal/invoices/{invoice}/pay'
  */
         processPaymentForm.post = (args: { invoice: number | { id: number } } | [invoice: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -627,7 +627,7 @@ processPayment.post = (args: { invoice: number | { id: number } } | [invoice: nu
     processPayment.form = processPaymentForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
 export const profile = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -642,7 +642,7 @@ profile.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
 profile.url = (options?: RouteQueryOptions) => {
@@ -651,7 +651,7 @@ profile.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
 profile.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -660,7 +660,7 @@ profile.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
 profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -670,7 +670,7 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
     const profileForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -680,7 +680,7 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
         profileForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -689,7 +689,7 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::profile
- * @see app/Http/Controllers/PatientPortalController.php:93
+ * @see app/Http/Controllers/PatientPortalController.php:97
  * @route '/portal/profile'
  */
         profileForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -705,7 +705,7 @@ profile.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     profile.form = profileForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::updateProfile
- * @see app/Http/Controllers/PatientPortalController.php:99
+ * @see app/Http/Controllers/PatientPortalController.php:103
  * @route '/portal/profile'
  */
 export const updateProfile = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -720,7 +720,7 @@ updateProfile.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::updateProfile
- * @see app/Http/Controllers/PatientPortalController.php:99
+ * @see app/Http/Controllers/PatientPortalController.php:103
  * @route '/portal/profile'
  */
 updateProfile.url = (options?: RouteQueryOptions) => {
@@ -729,7 +729,7 @@ updateProfile.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::updateProfile
- * @see app/Http/Controllers/PatientPortalController.php:99
+ * @see app/Http/Controllers/PatientPortalController.php:103
  * @route '/portal/profile'
  */
 updateProfile.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -739,7 +739,7 @@ updateProfile.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::updateProfile
- * @see app/Http/Controllers/PatientPortalController.php:99
+ * @see app/Http/Controllers/PatientPortalController.php:103
  * @route '/portal/profile'
  */
     const updateProfileForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -754,7 +754,7 @@ updateProfile.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::updateProfile
- * @see app/Http/Controllers/PatientPortalController.php:99
+ * @see app/Http/Controllers/PatientPortalController.php:103
  * @route '/portal/profile'
  */
         updateProfileForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -770,7 +770,7 @@ updateProfile.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     updateProfile.form = updateProfileForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
 export const messages = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -785,7 +785,7 @@ messages.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
 messages.url = (options?: RouteQueryOptions) => {
@@ -794,7 +794,7 @@ messages.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
 messages.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -803,7 +803,7 @@ messages.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
 messages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -813,7 +813,7 @@ messages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
     const messagesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -823,7 +823,7 @@ messages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
         messagesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -832,7 +832,7 @@ messages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\PatientPortalController::messages
- * @see app/Http/Controllers/PatientPortalController.php:105
+ * @see app/Http/Controllers/PatientPortalController.php:109
  * @route '/portal/messages'
  */
         messagesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -848,7 +848,7 @@ messages.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     messages.form = messagesForm
 /**
 * @see \App\Http\Controllers\PatientPortalController::sendMessage
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 export const sendMessage = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -863,7 +863,7 @@ sendMessage.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::sendMessage
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 sendMessage.url = (options?: RouteQueryOptions) => {
@@ -872,7 +872,7 @@ sendMessage.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PatientPortalController::sendMessage
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
 sendMessage.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -882,7 +882,7 @@ sendMessage.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\PatientPortalController::sendMessage
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
     const sendMessageForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -892,7 +892,7 @@ sendMessage.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\PatientPortalController::sendMessage
- * @see app/Http/Controllers/PatientPortalController.php:111
+ * @see app/Http/Controllers/PatientPortalController.php:115
  * @route '/portal/messages'
  */
         sendMessageForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

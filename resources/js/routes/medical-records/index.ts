@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::index
- * @see app/Http/Controllers/MedicalRecordController.php:12
+ * @see app/Http/Controllers/MedicalRecordController.php:14
  * @route '/medical-records'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     index.form = indexForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::store
- * @see app/Http/Controllers/MedicalRecordController.php:27
+ * @see app/Http/Controllers/MedicalRecordController.php:44
  * @route '/medical-records'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -94,7 +94,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::store
- * @see app/Http/Controllers/MedicalRecordController.php:27
+ * @see app/Http/Controllers/MedicalRecordController.php:44
  * @route '/medical-records'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::store
- * @see app/Http/Controllers/MedicalRecordController.php:27
+ * @see app/Http/Controllers/MedicalRecordController.php:44
  * @route '/medical-records'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -113,7 +113,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::store
- * @see app/Http/Controllers/MedicalRecordController.php:27
+ * @see app/Http/Controllers/MedicalRecordController.php:44
  * @route '/medical-records'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -123,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::store
- * @see app/Http/Controllers/MedicalRecordController.php:27
+ * @see app/Http/Controllers/MedicalRecordController.php:44
  * @route '/medical-records'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -134,7 +134,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
 export const show = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -149,7 +149,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
 show.url = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -182,7 +182,7 @@ show.url = (args: { medical_record: number | { id: number } } | [medical_record:
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
 show.get = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -191,7 +191,7 @@ show.get = (args: { medical_record: number | { id: number } } | [medical_record:
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
 show.head = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -201,7 +201,7 @@ show.head = (args: { medical_record: number | { id: number } } | [medical_record
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
     const showForm = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -211,7 +211,7 @@ show.head = (args: { medical_record: number | { id: number } } | [medical_record
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
         showForm.get = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -220,7 +220,7 @@ show.head = (args: { medical_record: number | { id: number } } | [medical_record
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::show
- * @see app/Http/Controllers/MedicalRecordController.php:48
+ * @see app/Http/Controllers/MedicalRecordController.php:65
  * @route '/medical-records/{medical_record}'
  */
         showForm.head = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -236,7 +236,7 @@ show.head = (args: { medical_record: number | { id: number } } | [medical_record
     show.form = showForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
 export const edit = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -251,7 +251,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
 edit.url = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -284,7 +284,7 @@ edit.url = (args: { medical_record: number | { id: number } } | [medical_record:
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
 edit.get = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -293,7 +293,7 @@ edit.get = (args: { medical_record: number | { id: number } } | [medical_record:
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
 edit.head = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -303,7 +303,7 @@ edit.head = (args: { medical_record: number | { id: number } } | [medical_record
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
     const editForm = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -313,7 +313,7 @@ edit.head = (args: { medical_record: number | { id: number } } | [medical_record
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
         editForm.get = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -322,7 +322,7 @@ edit.head = (args: { medical_record: number | { id: number } } | [medical_record
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::edit
- * @see app/Http/Controllers/MedicalRecordController.php:54
+ * @see app/Http/Controllers/MedicalRecordController.php:71
  * @route '/medical-records/{medical_record}/edit'
  */
         editForm.head = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -338,7 +338,7 @@ edit.head = (args: { medical_record: number | { id: number } } | [medical_record
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
 export const update = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -353,7 +353,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
 update.url = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -386,7 +386,7 @@ update.url = (args: { medical_record: number | { id: number } } | [medical_recor
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
 update.put = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -395,7 +395,7 @@ update.put = (args: { medical_record: number | { id: number } } | [medical_recor
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
 update.patch = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -405,7 +405,7 @@ update.patch = (args: { medical_record: number | { id: number } } | [medical_rec
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
     const updateForm = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -420,7 +420,7 @@ update.patch = (args: { medical_record: number | { id: number } } | [medical_rec
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
         updateForm.put = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -434,7 +434,7 @@ update.patch = (args: { medical_record: number | { id: number } } | [medical_rec
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::update
- * @see app/Http/Controllers/MedicalRecordController.php:60
+ * @see app/Http/Controllers/MedicalRecordController.php:77
  * @route '/medical-records/{medical_record}'
  */
         updateForm.patch = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -450,7 +450,7 @@ update.patch = (args: { medical_record: number | { id: number } } | [medical_rec
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::destroy
- * @see app/Http/Controllers/MedicalRecordController.php:77
+ * @see app/Http/Controllers/MedicalRecordController.php:95
  * @route '/medical-records/{medical_record}'
  */
 export const destroy = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -465,7 +465,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::destroy
- * @see app/Http/Controllers/MedicalRecordController.php:77
+ * @see app/Http/Controllers/MedicalRecordController.php:95
  * @route '/medical-records/{medical_record}'
  */
 destroy.url = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -498,7 +498,7 @@ destroy.url = (args: { medical_record: number | { id: number } } | [medical_reco
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::destroy
- * @see app/Http/Controllers/MedicalRecordController.php:77
+ * @see app/Http/Controllers/MedicalRecordController.php:95
  * @route '/medical-records/{medical_record}'
  */
 destroy.delete = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -508,7 +508,7 @@ destroy.delete = (args: { medical_record: number | { id: number } } | [medical_r
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::destroy
- * @see app/Http/Controllers/MedicalRecordController.php:77
+ * @see app/Http/Controllers/MedicalRecordController.php:95
  * @route '/medical-records/{medical_record}'
  */
     const destroyForm = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -523,7 +523,7 @@ destroy.delete = (args: { medical_record: number | { id: number } } | [medical_r
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::destroy
- * @see app/Http/Controllers/MedicalRecordController.php:77
+ * @see app/Http/Controllers/MedicalRecordController.php:95
  * @route '/medical-records/{medical_record}'
  */
         destroyForm.delete = (args: { medical_record: number | { id: number } } | [medical_record: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -539,7 +539,7 @@ destroy.delete = (args: { medical_record: number | { id: number } } | [medical_r
     destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
 export const create = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -554,7 +554,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
 create.url = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -587,7 +587,7 @@ create.url = (args: { patient: number | { id: number } } | [patient: number | { 
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
 create.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -596,7 +596,7 @@ create.get = (args: { patient: number | { id: number } } | [patient: number | { 
 })
 /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
 create.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -606,7 +606,7 @@ create.head = (args: { patient: number | { id: number } } | [patient: number | {
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
     const createForm = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -616,7 +616,7 @@ create.head = (args: { patient: number | { id: number } } | [patient: number | {
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
         createForm.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -625,7 +625,7 @@ create.head = (args: { patient: number | { id: number } } | [patient: number | {
         })
             /**
 * @see \App\Http\Controllers\MedicalRecordController::create
- * @see app/Http/Controllers/MedicalRecordController.php:21
+ * @see app/Http/Controllers/MedicalRecordController.php:31
  * @route '/medical-records/create/{patient}'
  */
         createForm.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -641,7 +641,7 @@ create.head = (args: { patient: number | { id: number } } | [patient: number | {
     create.form = createForm
 /**
 * @see \App\Http\Controllers\MedicalRecordController::attachDocument
- * @see app/Http/Controllers/MedicalRecordController.php:84
+ * @see app/Http/Controllers/MedicalRecordController.php:102
  * @route '/medical-records/{medicalRecord}/attach-document'
  */
 export const attachDocument = (args: { medicalRecord: number | { id: number } } | [medicalRecord: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -656,7 +656,7 @@ attachDocument.definition = {
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::attachDocument
- * @see app/Http/Controllers/MedicalRecordController.php:84
+ * @see app/Http/Controllers/MedicalRecordController.php:102
  * @route '/medical-records/{medicalRecord}/attach-document'
  */
 attachDocument.url = (args: { medicalRecord: number | { id: number } } | [medicalRecord: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -689,7 +689,7 @@ attachDocument.url = (args: { medicalRecord: number | { id: number } } | [medica
 
 /**
 * @see \App\Http\Controllers\MedicalRecordController::attachDocument
- * @see app/Http/Controllers/MedicalRecordController.php:84
+ * @see app/Http/Controllers/MedicalRecordController.php:102
  * @route '/medical-records/{medicalRecord}/attach-document'
  */
 attachDocument.post = (args: { medicalRecord: number | { id: number } } | [medicalRecord: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -699,7 +699,7 @@ attachDocument.post = (args: { medicalRecord: number | { id: number } } | [medic
 
     /**
 * @see \App\Http\Controllers\MedicalRecordController::attachDocument
- * @see app/Http/Controllers/MedicalRecordController.php:84
+ * @see app/Http/Controllers/MedicalRecordController.php:102
  * @route '/medical-records/{medicalRecord}/attach-document'
  */
     const attachDocumentForm = (args: { medicalRecord: number | { id: number } } | [medicalRecord: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -709,7 +709,7 @@ attachDocument.post = (args: { medicalRecord: number | { id: number } } | [medic
 
             /**
 * @see \App\Http\Controllers\MedicalRecordController::attachDocument
- * @see app/Http/Controllers/MedicalRecordController.php:84
+ * @see app/Http/Controllers/MedicalRecordController.php:102
  * @route '/medical-records/{medicalRecord}/attach-document'
  */
         attachDocumentForm.post = (args: { medicalRecord: number | { id: number } } | [medicalRecord: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
